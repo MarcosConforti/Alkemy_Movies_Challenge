@@ -8,6 +8,7 @@ import com.example.alkemymovieschallenge.data.database.entities.MoviesEntities
 
 @Dao
 interface MoviesDao {
+
     @Query("SELECT * FROM movies_table")
     suspend fun getAllMovies():List<MoviesEntities>
 

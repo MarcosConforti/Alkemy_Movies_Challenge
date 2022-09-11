@@ -3,6 +3,7 @@ package com.example.alkemymovieschallenge.core.di
 import android.content.Context
 import androidx.room.Room
 import com.example.alkemymovieschallenge.data.database.MoviesDataBase
+import com.example.alkemymovieschallenge.data.database.TvDataBase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,14 +16,25 @@ import javax.inject.Singleton
 object RoomModule {
 
     private const val MOVIES_DATABASE_NAME = "MOVIES_DATABASE"
+    private const val SERIES_DATABASE_NAME = "SERIES_DATABASE"
 
     @Singleton
     @Provides
-    fun provideRoom(@ApplicationContext context: Context): MoviesDataBase {
+    fun provideMoviesRoom(@ApplicationContext context: Context): MoviesDataBase {
 
         return Room.databaseBuilder(context,MoviesDataBase::class.java, MOVIES_DATABASE_NAME).build()
     }
     @Singleton
     @Provides
-    fun provideDrinkDao(db: MoviesDataBase) = db.getMoviesDao()
+    fun provideMoviesDao(db: MoviesDataBase) = db.getMoviesDao()
+
+    @Singleton
+    @Provides
+    fun provideTvRoom(@ApplicationContext context: Context): TvDataBase {
+
+        return Room.databaseBuilder(context,TvDataBase::class.java, SERIES_DATABASE_NAME).build()
+    }
+    @Singleton
+    @Provides
+    fun provideTvDao(db: TvDataBase) = db.getTvDao()
 }

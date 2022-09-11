@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Alkemy Movies Challenge</string>
+    <string name="title">Title</string>
+    <string name="voteAverage">Vote Average</string>
+    <string name="overview">Overview</string>
+    <string name="releaseDate">Release Date</string>
+    <string name="popularMovies">Popular Movies:</string>
+    <string name="latestMovies">Latest Movies:</string>
+    <string name="upComingMovies">Up Coming Movies:</string>
+    <string name="topRatedMovies">Top Rated Movies:</string>
+    <string name="nowPlayingMovies">Now Playing:</string>
+    <string name="popularSeries">Popular Series:</string>
+    <string name="latestSeries">Latest Series:</string>
+    <string name="airingToday">TV Airing Today:</string>
+    <string name="topRatedSeries">Top Rated Series:</string>
+    <string name="onTheAir">TV On The Air:</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="go">Go !</string>
+
 </resources>

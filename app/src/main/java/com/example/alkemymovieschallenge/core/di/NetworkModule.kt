@@ -15,9 +15,9 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit():Retrofit{
+    fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://www.thecocktaildb.com/api/json/v1/1/")
+            .baseUrl("https://api.themoviedb.org/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
