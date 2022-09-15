@@ -6,6 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class MoviesModel(
+    @SerializedName("id") val id: String,
     @SerializedName("title") val title: String,
     @SerializedName("release_date") val releaseDate: String,
     @SerializedName("vote_average") val voteAverage: String,

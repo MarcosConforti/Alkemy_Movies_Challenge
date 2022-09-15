@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class GetPopularTvUseCase @Inject constructor(private val tvRepository: TvRepository) {
 
-    suspend operator fun invoke(): List<DomainTvModel> { //tvRepository.getPopularTvFromApi()
+    suspend operator fun invoke(): List<DomainTvModel> {
         val series = tvRepository.getPopularTvFromApi()
         return if (series.isNotEmpty()) {
             tvRepository.cleanList()

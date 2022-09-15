@@ -5,18 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.alkemymovieschallenge.domain.model.DomainTvModel
-import com.example.alkemymovieschallenge.domain.useCase.tv.GetLatestTvUseCase
+import com.example.alkemymovieschallenge.domain.useCase.tv.GetAiringTodayTvUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LatestTvViewModel @Inject constructor(private val getLatestTvUseCase: GetLatestTvUseCase) :
+class AiringTodayTvViewModel @Inject constructor(private val getAiringTodayTvUseCase: GetAiringTodayTvUseCase) :
     ViewModel() {
 
-    private val _getLatestTvLiveData = MutableLiveData<List<DomainTvModel>>()
+    private val _getAiringTodayTvLiveData = MutableLiveData<List<DomainTvModel>>()
 
-    val getLatestTvLiveData: LiveData<List<DomainTvModel>> = _getLatestTvLiveData
+    val getAiringTodayTvLiveData: LiveData<List<DomainTvModel>> = _getAiringTodayTvLiveData
 
     init {
         callSeriesUseCase()
@@ -24,9 +24,9 @@ class LatestTvViewModel @Inject constructor(private val getLatestTvUseCase: GetL
 
     private fun callSeriesUseCase() {
         viewModelScope.launch {
-            val result = getLatestTvUseCase()
+            val result = getAiringTodayTvUseCase()
             if (result.isNotEmpty()) {
-                _getLatestTvLiveData.value = result
+                _getAiringTodayTvLiveData.value = result
             }
         }
     }

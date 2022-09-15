@@ -25,5 +25,17 @@ class TvService @Inject constructor(private val apiService: APIService) {
             response.body()?.results?: emptyList()
         }
     }
+    suspend fun getAiringTodayTv():List<TvModel>{
+        return withContext(Dispatchers.IO){
+            val response = apiService.getAiringTodayTv()
+            response.body()?.results?: emptyList()
+        }
+    }
+    suspend fun getOnTheAirTv():List<TvModel>{
+        return withContext(Dispatchers.IO){
+            val response = apiService.getOnTheAirTv()
+            response.body()?.results?: emptyList()
+        }
+    }
 
 }

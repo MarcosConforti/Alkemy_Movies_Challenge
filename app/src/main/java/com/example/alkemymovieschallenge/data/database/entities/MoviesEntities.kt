@@ -9,7 +9,7 @@ import com.example.alkemymovieschallenge.domain.model.DomainModel
 @Entity(tableName = "movies_table")
 data class MoviesEntities(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id") val id: Int = 0,
+    @ColumnInfo(name = "id") val id: String,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "release_date") val releaseDate: String,
     @ColumnInfo(name = "vote_average") val voteAverage: String,
@@ -18,6 +18,7 @@ data class MoviesEntities(
 )
 
 fun DomainModel.toMovieDataBase() = MoviesEntities(
+    id = id,
     title = title,
     voteAverage = voteAverage,
     overview = overview,

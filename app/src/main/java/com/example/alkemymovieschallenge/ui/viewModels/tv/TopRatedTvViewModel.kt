@@ -19,10 +19,10 @@ class TopRatedTvViewModel @Inject constructor(private val getTopRatedTvUseCase: 
     val getTopRatedTvLiveData: LiveData<List<DomainTvModel>> = _getTopRatedTvLiveData
 
     init {
-        callMoviesUseCase()
+        callSeriesUseCase()
     }
 
-    private fun callMoviesUseCase() {
+    private fun callSeriesUseCase() {
         viewModelScope.launch {
             val result = getTopRatedTvUseCase()
             if (result.isNotEmpty()) {

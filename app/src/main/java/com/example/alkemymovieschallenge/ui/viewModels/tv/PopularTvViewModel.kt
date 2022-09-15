@@ -19,10 +19,10 @@ class PopularTvViewModel @Inject constructor(private val getPopularTvUseCase: Ge
     val getPopularTvLiveData: LiveData<List<DomainTvModel>> = _getPopularTvLiveData
 
     init {
-        callMoviesUseCase()
+        callSeriesUseCase()
     }
 
-    private fun callMoviesUseCase() {
+    private fun callSeriesUseCase() {
         viewModelScope.launch {
             val result = getPopularTvUseCase()
             if (result.isNotEmpty()) {

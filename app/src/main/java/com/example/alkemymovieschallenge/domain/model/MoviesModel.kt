@@ -7,6 +7,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class DomainModel(
+    var id:String,
     val title: String,
     val voteAverage: String,
     val releaseDate: String,
@@ -14,5 +15,5 @@ data class DomainModel(
     val image: String
 ):Parcelable
 //funcion de extension para realizar los mapers
-fun MoviesModel.toDomainMovie() = DomainModel(title, voteAverage,releaseDate,overview,image)
-fun MoviesEntities.toDomainMovie() = DomainModel(title, voteAverage,releaseDate,overview, image)
+fun MoviesModel.toDomainMovie() = DomainModel(id,title, voteAverage,releaseDate,overview,image)
+fun MoviesEntities.toDomainMovie() = DomainModel(id,title, voteAverage,releaseDate,overview, image)

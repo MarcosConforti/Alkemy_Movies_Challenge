@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetPopularMoviesUseCase @Inject constructor(private val moviesRepository: MoviesRepository) {
 
     suspend operator fun invoke(): List<DomainModel> {
-        //moviesRepository.getPopularMoviesFromApi()
+
         val movies = moviesRepository.getPopularMoviesFromApi()
         return if (movies.isNotEmpty()) {
             moviesRepository.cleanList()

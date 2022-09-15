@@ -33,6 +33,14 @@ class TvRepository @Inject constructor(
 
         return response.map { it.toDomainTv() }
     }
+    suspend fun getAiringTodayTvFromApi():List<DomainTvModel>{
+        val response: List<TvModel> = api.getAiringTodayTv()
+        return response.map { it.toDomainTv() }
+    }
+    suspend fun getOnTheAirTvFromApi():List<DomainTvModel>{
+        val response: List<TvModel> = api.getOnTheAirTv()
+        return response.map { it.toDomainTv() }
+    }
     suspend fun getSeriesFromDataBase(): List<DomainTvModel> {
         val response = tvDao.getAllSeries()
         return response.map { it.toDomainTv() }

@@ -5,10 +5,10 @@ import com.example.alkemymovieschallenge.data.database.entities.toTvDataBase
 import com.example.alkemymovieschallenge.domain.model.DomainTvModel
 import javax.inject.Inject
 
-class GetTopRatedTvUseCase @Inject constructor(private val tvRepository: TvRepository) {
+class GetOnTheAirTvUseCase @Inject constructor(private val tvRepository: TvRepository) {
 
     suspend operator fun invoke(): List<DomainTvModel> {
-        val series = tvRepository.getTopRatedTvFromApi()
+        val series = tvRepository.getOnTheAirTvFromApi()
 
         return if (series.isNotEmpty()) {
             tvRepository.cleanList()

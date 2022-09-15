@@ -13,12 +13,8 @@ import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.FragmentSeriesBinding
 import com.example.alkemymovieschallenge.domain.model.DomainTvModel
 import com.example.alkemymovieschallenge.ui.recyclerViews.OnClickTvListener
-import com.example.alkemymovieschallenge.ui.recyclerViews.tv.LatestTvAdapter
-import com.example.alkemymovieschallenge.ui.recyclerViews.tv.PopularTvAdapter
-import com.example.alkemymovieschallenge.ui.recyclerViews.tv.TopRatedTvAdapter
-import com.example.alkemymovieschallenge.ui.viewModels.tv.LatestTvViewModel
-import com.example.alkemymovieschallenge.ui.viewModels.tv.PopularTvViewModel
-import com.example.alkemymovieschallenge.ui.viewModels.tv.TopRatedTvViewModel
+import com.example.alkemymovieschallenge.ui.recyclerViews.tv.*
+import com.example.alkemymovieschallenge.ui.viewModels.tv.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,14 +26,14 @@ class SeriesFragment : Fragment(), OnClickTvListener {
     private var popularTvAdapter = PopularTvAdapter(emptyList(), this)
     private var latestTvAdapter = LatestTvAdapter(emptyList(), this)
     private var topRatedTvAdapter = TopRatedTvAdapter(emptyList(), this)
-    //private var upComingMoviesAdapter = UpComingMoviesAdapter(emptyList(), this)
-    //private var nowPlayingMoviesAdapter = NowPlayingMoviesAdapter(emptyList(), this)
+    private var airingTodayTvAdapter = AiringTodayTvAdapter(emptyList(), this)
+    private var onTheAirTvAdapter = OnTheAirTvAdapter(emptyList(), this)
 
     private val popularTvViewModel: PopularTvViewModel by viewModels()
     private val latestTvViewModel: LatestTvViewModel by viewModels()
     private val topRatedTvViewModel: TopRatedTvViewModel by viewModels()
-    //private val upComingMoviesViewModel: UpComingMoviesViewModel by viewModels()
-    //private val nowPlayingMoviesViewModel: NowPlayingMoviesViewModel by viewModels()
+    private val airingTodayTvViewModel: AiringTodayTvViewModel by viewModels()
+    private val onTheAirTvViewModel: OnTheAirTvViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,20 +81,20 @@ class SeriesFragment : Fragment(), OnClickTvListener {
                     topRatedTvList
                 )
             })
-        /*upComingMoviesViewModel.getUpComingMoviesLiveData.observe(
+        airingTodayTvViewModel.getAiringTodayTvLiveData.observe(
             viewLifecycleOwner,
-            Observer { upComingMovieList ->
-                upComingMoviesAdapter.setUpComingMoviesList(
-                    upComingMovieList
+            Observer { airingTvList ->
+                airingTodayTvAdapter.setAiringTodayTvList(
+                    airingTvList
                 )
             })
-        nowPlayingMoviesViewModel.getNowPlayingMoviesLiveData.observe(
+        onTheAirTvViewModel.getOnTheAirTvLiveData.observe(
             viewLifecycleOwner,
-            Observer { nowPlayingMovieList ->
-                nowPlayingMoviesAdapter.setNowPlayingMoviesList(
-                    nowPlayingMovieList
+            Observer { onTheAirTvList ->
+                onTheAirTvAdapter.setOnTheAirTvList(
+                    onTheAirTvList
                 )
-            })*/
+            })
     }
 
     override fun onTvClicked(tv: DomainTvModel) {
@@ -124,6 +120,22 @@ class SeriesFragment : Fragment(), OnClickTvListener {
         }
         binding.rvTopRatedTv.apply {
             adapter = topRatedTvAdapter
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+        }
+        binding.rvAiringTodayTv.apply {
+            adapter = airingTodayTvAdapter
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+        }
+        binding.rvOnTheAirTv.apply {
+            adapter = airingTodayTvAdapter
             layoutManager = LinearLayoutManager(
                 requireContext(),
                 LinearLayoutManager.HORIZONTAL,

@@ -28,13 +28,13 @@ class MainActivity : AppCompatActivity(), OnClickMoviesListener {
 
 
     override fun onMoviesClicked(movie: DomainModel) {
-        val intent = Intent(this, DescriptionActivity::class.java)
+        /*val intent = Intent(this, DescriptionActivity::class.java)
         intent.putExtra("title", movie.title)
         intent.putExtra("releaseDate", movie.releaseDate)
         intent.putExtra("image", movie.image)
         intent.putExtra("voteAverage", movie.voteAverage)
         intent.putExtra("overview", movie.overview)
-        startActivity(intent)
+        startActivity(intent)*/
     }
     /* override fun onCreateOptionsMenu(menu: Menu): Boolean {
          menuInflater.inflate(R.menu.pokeapp_options_menu, menu)
