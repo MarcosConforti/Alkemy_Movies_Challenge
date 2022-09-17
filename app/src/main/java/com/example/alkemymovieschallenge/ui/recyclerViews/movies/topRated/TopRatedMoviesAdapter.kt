@@ -25,8 +25,6 @@ class TopRatedMoviesAdapter(
 
     override fun getItemCount(): Int = topRatedMoviesList.size
 
-    //override fun getFilter(): Filter = filter
-
     fun setTopRatedMoviesList(newMovieList: List<DomainModel>) {
         topRatedMoviesList = newMovieList
         notifyDataSetChanged()

@@ -2,51 +2,91 @@ package com.example.alkemymovieschallenge.data
 
 import com.example.alkemymovieschallenge.data.database.dao.MoviesDao
 import com.example.alkemymovieschallenge.data.database.entities.MoviesEntities
-import com.example.alkemymovieschallenge.data.model.MoviesModel
-import com.example.alkemymovieschallenge.data.network.MoviesService
+import com.example.alkemymovieschallenge.data.database.entities.toMovieDataBase
+import com.example.alkemymovieschallenge.data.network.APIService
+import com.example.alkemymovieschallenge.domain.NetworkState
 import com.example.alkemymovieschallenge.domain.model.DomainModel
 import com.example.alkemymovieschallenge.domain.model.toDomainMovie
 import javax.inject.Inject
 
 //esta clase funciona para seleccionar de donde el programa tomara las peliculas, si de la api o db
 class MoviesRepository @Inject constructor(
-    private val api: MoviesService,
+    private val api: APIService,
     private val moviesDao: MoviesDao
 ) {
-    suspend fun getPopularMoviesFromApi(): List<DomainModel> {
+    suspend fun getPopularMoviesFromApi(): NetworkState<List<DomainModel>> =
         //recupero las peliculas
-        val response: List<MoviesModel> = api.getPopularMovies()
-        //mapeo
-        return response.map { it.toDomainMovie() }
-    }
+       try {
+            var moviesApi = api.getPopularMovies().results
+            if (moviesApi.isNotEmpty()) {
+                cleanList()
+                insertMovies(moviesApi.map { it.toMovieDataBase() })
+                NetworkState.Success(moviesApi.map { it.toDomainMovie() })
 
-    suspend fun getLatestMoviesFromApi(): List<DomainModel> {
+            } else {
+                //si esta vacio, que recupere los datos de la db
+                val moviesDb = getMoviesFromDataBase()
+                NetworkState.Success(moviesDb)
+            }
 
-        val response: List<MoviesModel> = api.getLatestMovies()
+        } catch (e: Throwable) {
+            NetworkState.Error(e)
+        }
 
-        return response.map { it.toDomainMovie() }
-    }
+    suspend fun getTopRatedMoviesFromApi(): NetworkState<List<DomainModel>> =
 
-    suspend fun getTopRatedMoviesFromApi(): List<DomainModel> {
+        try {
+            var moviesApi = api.getTopRatedtMovies().results
+            if (moviesApi.isNotEmpty()) {
+                cleanList()
+                insertMovies(moviesApi.map { it.toMovieDataBase() })
+                NetworkState.Success(moviesApi.map { it.toDomainMovie() })
 
-        val response: List<MoviesModel> = api.getTopRatedMovies()
+            } else {
+                //si esta vacio, que recupere los datos de la db
+                val moviesDb = getMoviesFromDataBase()
+                NetworkState.Success(moviesDb)
+            }
 
-        return response.map { it.toDomainMovie() }
-    }
+        } catch (e: Throwable) {
+            NetworkState.Error(e)
+        }
 
-    suspend fun getUpComingMoviesFromApi(): List<DomainModel> {
+    suspend fun getUpComingMoviesFromApi(): NetworkState<List<DomainModel>> =
+        try {
+            var moviesApi = api.getUpComingMovies().results
+            if (moviesApi.isNotEmpty()) {
+                cleanList()
+                insertMovies(moviesApi.map { it.toMovieDataBase() })
+                NetworkState.Success(moviesApi.map { it.toDomainMovie() })
 
-        val response: List<MoviesModel> = api.getUpComingMovies()
+            } else {
+                //si esta vacio, que recupere los datos de la db
+                val moviesDb = getMoviesFromDataBase()
+                NetworkState.Success(moviesDb)
+            }
 
-        return response.map { it.toDomainMovie() }
-    }
+        } catch (e: Throwable) {
+            NetworkState.Error(e)
+        }
 
-    suspend fun getNowPlayingMoviesFromApi(): List<DomainModel> {
+    suspend fun getNowPlayingMoviesFromApi(): NetworkState<List<DomainModel>> =
+        try {
+            var moviesApi = api.getNowPlayingMovies().results
+            if (moviesApi.isNotEmpty()) {
+                cleanList()
+                insertMovies(moviesApi.map { it.toMovieDataBase() })
+                NetworkState.Success(moviesApi.map { it.toDomainMovie() })
 
-        val response: List<MoviesModel> = api.getNowPlayingMovies()
+            } else {
+                //si esta vacio, que recupere los datos de la db
+                val moviesDb = getMoviesFromDataBase()
+                NetworkState.Success(moviesDb)
+            }
 
-        return response.map { it.toDomainMovie() }
-    }
+        } catch (e: Throwable) {
+            NetworkState.Error(e)
+        }
 
     suspend fun getMoviesFromDataBase(): List<DomainModel> {
         val response = moviesDao.getAllMovies()

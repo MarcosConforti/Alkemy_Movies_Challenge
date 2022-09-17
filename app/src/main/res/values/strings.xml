@@ -18,5 +18,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="go">Go !</string>
+    <string name="favoriteMovies">Favorite Movies:</string>
+    <string name="favoriteSeries">Favorite Series:</string>
 
 </resources>

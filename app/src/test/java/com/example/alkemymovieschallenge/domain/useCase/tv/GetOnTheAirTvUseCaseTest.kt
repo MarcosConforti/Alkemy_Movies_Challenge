@@ -1,6 +1,7 @@
 package com.example.alkemymovieschallenge.domain.useCase.tv
 
 import com.example.alkemymovieschallenge.data.TvRepository
+import com.example.alkemymovieschallenge.domain.NetworkState
 import com.example.alkemymovieschallenge.domain.model.DomainTvModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -26,7 +27,7 @@ class GetOnTheAirTvUseCaseTest{
     fun `when the api doesnt return anything then get values from database`() = runBlocking {
 
         //Given
-        coEvery { repository.getOnTheAirTvFromApi() } returns emptyList()
+        coEvery { repository.getOnTheAirTvFromApi() } returns NetworkState.Success(emptyList())
         //Then
         getOnTheAirTvUseCase()
         //When
@@ -34,22 +35,4 @@ class GetOnTheAirTvUseCaseTest{
 
     }
 
-    @Test
-    fun `when the api return something then get values from api`() = runBlocking {
-        //Given
-        val myList = listOf(
-            DomainTvModel(
-                "Mandalorian Season 2", "9.5", "5-15-2020",
-                "grogu", "image"
-            )
-        )
-        coEvery { repository.getOnTheAirTvFromApi() } returns myList
-        //When
-        val response = getOnTheAirTvUseCase()
-        //Then
-        coVerify(exactly = 1) { repository.cleanList() }
-        coVerify(exactly = 1) { repository.insertSeries(any()) }
-        coVerify(exactly = 0) { repository.getSeriesFromDataBase() }
-        assert(myList == response)
-    }
 }

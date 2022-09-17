@@ -3,7 +3,7 @@ package com.example.alkemymovieschallenge.data.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.alkemymovieschallenge.domain.model.DomainTvModel
+import com.example.alkemymovieschallenge.data.model.TvModel
 
 
 @Entity(tableName = "series_table")
@@ -17,7 +17,8 @@ data class TvEntities(
     @ColumnInfo(name = "image") val image: String
 )
 
-fun DomainTvModel.toTvDataBase() = TvEntities(
+fun TvModel.toTvDataBase() = TvEntities(
+    id = id.toInt(),
     title = title,
     voteAverage = voteAverage,
     overview = overview,

@@ -25,8 +25,6 @@ class NowPlayingMoviesAdapter(
 
     override fun getItemCount(): Int = nowPlayingMoviesList.size
 
-    //override fun getFilter(): Filter = filter
-
     fun setNowPlayingMoviesList(newMovieList: List<DomainModel>) {
         nowPlayingMoviesList = newMovieList
         notifyDataSetChanged()

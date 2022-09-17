@@ -1,17 +1,21 @@
 package com.example.alkemymovieschallenge.ui.activities
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI.setupWithNavController
+import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.ActivityMainBinding
-import com.example.alkemymovieschallenge.domain.model.DomainModel
-import com.example.alkemymovieschallenge.ui.recyclerViews.OnClickMoviesListener
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), OnClickMoviesListener {
+class MainActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityMainBinding
+
+    private lateinit var navController: NavController
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,37 +23,12 @@ class MainActivity : AppCompatActivity(), OnClickMoviesListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /*binding.btnMovies.setOnClickListener {
-            val intent = Intent(this, SeriesFragment::class.java)
-            startActivity(intent)
-        }*/
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+                as NavHostFragment
+        navController = navHostFragment.navController
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.btn_navigation_view)
+        setupWithNavController(bottomNavigationView,navController)
 
     }
 
-
-    override fun onMoviesClicked(movie: DomainModel) {
-        /*val intent = Intent(this, DescriptionActivity::class.java)
-        intent.putExtra("title", movie.title)
-        intent.putExtra("releaseDate", movie.releaseDate)
-        intent.putExtra("image", movie.image)
-        intent.putExtra("voteAverage", movie.voteAverage)
-        intent.putExtra("overview", movie.overview)
-        startActivity(intent)*/
-    }
-    /* override fun onCreateOptionsMenu(menu: Menu): Boolean {
-         menuInflater.inflate(R.menu.pokeapp_options_menu, menu)
-         val item = menu.findItem(R.id.searchView)
-         val searchView = item.actionView as SearchView
-         searchView.queryHint = "Search by name or id"
-         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-             override fun onQueryTextSubmit(query: String): Boolean {
-                 return false
-             }
-             override fun onQueryTextChange(newText: String): Boolean {
-                 adapter.filter.filter(newText)
-                 return false
-             }
-         })
-         return true
-     }*/
 }

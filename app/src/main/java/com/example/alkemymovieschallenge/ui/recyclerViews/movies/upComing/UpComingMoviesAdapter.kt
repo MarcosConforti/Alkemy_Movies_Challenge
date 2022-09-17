@@ -25,7 +25,6 @@ class UpComingMoviesAdapter(
 
     override fun getItemCount(): Int = upComingMoviesList.size
 
-    //override fun getFilter(): Filter = filter
 
     fun setUpComingMoviesList(newMovieList: List<DomainModel>) {
         upComingMoviesList = newMovieList

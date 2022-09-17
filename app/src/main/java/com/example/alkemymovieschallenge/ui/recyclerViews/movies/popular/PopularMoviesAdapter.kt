@@ -25,8 +25,6 @@ class PopularMoviesAdapter(
 
     override fun getItemCount(): Int = popularMoviesList.size
 
-    //override fun getFilter(): Filter = filter
-
     fun setPopularMoviesList(newMovieList: List<DomainModel>) {
         popularMoviesList = newMovieList
         notifyDataSetChanged()

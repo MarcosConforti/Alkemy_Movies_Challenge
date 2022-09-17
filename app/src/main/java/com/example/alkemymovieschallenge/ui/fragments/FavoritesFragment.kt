@@ -25,12 +25,12 @@ class FavoritesFragment : Fragment() {
     ): View? {
         _binding = FragmentMoviesBinding.inflate(inflater, container, false)
 
-        binding.btnMovies.setOnClickListener{
+        /*binding.btnMovies.setOnClickListener{
             findNavController().navigate(R.id.moviesFragment)
         }
         binding.btnSeries.setOnClickListener{
             findNavController().navigate(R.id.seriesFragment)
-        }
+        }*/
         return binding.root
 
     }
