@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.alkemymovieschallenge.domain.NetworkState
-import com.example.alkemymovieschallenge.domain.TvList
+import com.example.alkemymovieschallenge.domain.list.TvList
 import com.example.alkemymovieschallenge.domain.useCase.tv.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -38,12 +38,14 @@ class SeriesViewModel @Inject constructor(
                 && topRatedResult is NetworkState.Success &&
                 airingTodayResult is NetworkState.Success
             ) {
-                _getSeriesLiveData.value = NetworkState.Success(TvList(
+                _getSeriesLiveData.value = NetworkState.Success(
+                    TvList(
                     popularTv = popularTvResult.data,
                     onTheAir = onTheAirResult.data,
                     topRated = topRatedResult.data,
                     airingToday = airingTodayResult.data
-                ))
+                )
+                )
             }else{
                 _getSeriesLiveData.value = NetworkState.Error(Error())
             }

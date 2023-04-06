@@ -7,4 +7,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="ic_favorites">#3D45DC</color>
+    <color name="ic_favorites_background">#3D4ADC</color>
+    <color name="ic_favorites_ouline_background">#FFFFFF</color>
+    <color name="ic_llogo_background">#FFFFFF</color>
+    <color name="ic_movie_background">#423DDC</color>
+    <color name="ic_series_background">#3D40DC</color>
+    <color name="recycler_background">#181B47</color>
+    <color name="voteAverage_color">#D2DA2E</color>
+
 </resources>

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Movies"
+    <item android:title="@string/movies"
         android:id="@+id/moviesFragment"
         android:icon="@drawable/ic_movie_foreground"/>
-    <item android:title="Series"
+    <item android:title="@string/series"
         android:id="@+id/seriesFragment"
         android:icon="@drawable/ic_series"/>
-    <item android:title="Favorites"
+    <item android:title="@string/search"
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/ic_search"/>
+    <item android:title="@string/favorites"
         android:id="@+id/favoritesFragment"
         android:icon="@drawable/ic_favorites_outline_foreground"/>
 </menu>

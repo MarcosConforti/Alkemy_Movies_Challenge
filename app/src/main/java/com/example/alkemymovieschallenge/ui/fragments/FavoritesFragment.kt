@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.alkemymovieschallenge.R
+import com.example.alkemymovieschallenge.databinding.FragmentFavoritesBinding
 import com.example.alkemymovieschallenge.databinding.FragmentMoviesBinding
 
 class FavoritesFragment : Fragment() {
 
-    private var _binding: FragmentMoviesBinding? = null
+    private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
 
 
@@ -23,7 +24,7 @@ class FavoritesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMoviesBinding.inflate(inflater, container, false)
+        _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
 
         /*binding.btnMovies.setOnClickListener{
             findNavController().navigate(R.id.moviesFragment)

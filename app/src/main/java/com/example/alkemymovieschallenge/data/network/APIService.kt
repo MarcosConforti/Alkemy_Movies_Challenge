@@ -31,5 +31,8 @@ interface APIService {
     @GET("3/tv/on_the_air?api_key=b1bc4f98ee6343c991e3ee0d83868679")
     suspend fun getOnTheAirTv():TvResponse
 
+    @GET("3/search/movie?api_key=b1bc4f98ee6343c991e3ee0d83868679")
+    suspend fun getAllMovies():MoviesResponse
+
 
 }

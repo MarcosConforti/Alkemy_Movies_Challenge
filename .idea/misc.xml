@@ -4,9 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/drawable-v24/bottom_background.xml" value="0.135" />
+        <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1255" />
         <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/drawable/ic_favorites_foreground.xml" value="0.135" />
         <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/drawable/ic_favorites_outline_foreground.xml" value="0.134" />
+        <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1255" />
         <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/drawable/ic_movie_foreground.xml" value="0.135" />
+        <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/drawable/ic_search.xml" value="0.1255" />
         <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/drawable/ic_series.xml" value="0.135" />
         <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/drawable/ic_series_foreground.xml" value="0.135" />
         <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/layout/activity_description.xml" value="0.1796875" />
@@ -17,10 +20,13 @@
         <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/layout/fragment_favorites.xml" value="0.1796875" />
         <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/layout/fragment_movies.xml" value="0.1796875" />
         <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/layout/fragment_movies_detail.xml" value="0.1796875" />
+        <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/layout/fragment_search.xml" value="0.1796875" />
         <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/layout/fragment_series.xml" value="0.165625" />
+        <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/layout/fragment_series_detail.xml" value="0.1796875" />
         <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/layout/fragment_series_detali.xml" value="0.1796875" />
         <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/layout/item_grid_list.xml" value="0.1796875" />
         <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/layout/item_list_movie.xml" value="0.1796875" />
+        <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/layout/view_loading.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/marco/AndroidStudioProjects/AlkemyMoviesChallenge/app/src/main/res/menu/bottom_menu.xml" value="0.1796875" />
       </map>
     </option>

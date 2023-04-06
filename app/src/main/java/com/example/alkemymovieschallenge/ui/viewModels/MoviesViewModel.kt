@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.alkemymovieschallenge.domain.MovieList
+import com.example.alkemymovieschallenge.domain.list.MovieList
 import com.example.alkemymovieschallenge.domain.NetworkState
 import com.example.alkemymovieschallenge.domain.useCase.movies.GetNowPlayingMoviesUseCase
 import com.example.alkemymovieschallenge.domain.useCase.movies.GetPopularMoviesUseCase
@@ -20,13 +20,14 @@ class MoviesViewModel @Inject constructor(
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
     private val getUpComingMoviesUseCase: GetUpComingMoviesUseCase,
     private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase,
-
+  //  private val getAllMoviesUseCase: GetAllMoviesUseCase
     ) :
     ViewModel() {
 
     private val _getMoviesLiveData = MutableLiveData<NetworkState<MovieList>>()
 
     val getMoviesLiveData: LiveData<NetworkState<MovieList>> = _getMoviesLiveData
+
 
     init {
         callMoviesUseCase()
@@ -39,16 +40,20 @@ class MoviesViewModel @Inject constructor(
             val upComingResult = getUpComingMoviesUseCase()
             val topRatedResult = getTopRatedMoviesUseCase()
             val nowPlayingResult = getNowPlayingMoviesUseCase()
+            //val allMoviesResult = getAllMoviesUseCase()
             if (popularResult is NetworkState.Success && upComingResult is NetworkState.Success
                 && topRatedResult is NetworkState.Success &&
-                nowPlayingResult is NetworkState.Success
+                nowPlayingResult is NetworkState.Success /*&& allMoviesResult is NetworkState.Success*/
             ) {
-                _getMoviesLiveData.value = NetworkState.Success(MovieList(
+                _getMoviesLiveData.value = NetworkState.Success(
+                    MovieList(
                     popular = popularResult.data,
                     upComing = upComingResult.data,
                     topRated = topRatedResult.data,
                     nowPlaying = nowPlayingResult.data
-                ))
+                    //allMovies = allMoviesResult.data
+                )
+                )
             }else{
                 _getMoviesLiveData.value = NetworkState.Error(Error())
             }

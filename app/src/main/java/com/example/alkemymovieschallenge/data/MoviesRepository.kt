@@ -18,16 +18,17 @@ class MoviesRepository @Inject constructor(
         //recupero las peliculas
        try {
             var moviesApi = api.getPopularMovies().results
-            if (moviesApi.isNotEmpty()) {
-                cleanList()
-                insertMovies(moviesApi.map { it.toMovieDataBase() })
-                NetworkState.Success(moviesApi.map { it.toDomainMovie() })
+           val success = if (moviesApi.isNotEmpty()) {
+               cleanList()
+               insertMovies(moviesApi.map { it.toMovieDataBase() })
+               NetworkState.Success(moviesApi.map { it.toDomainMovie() })
 
-            } else {
-                //si esta vacio, que recupere los datos de la db
-                val moviesDb = getMoviesFromDataBase()
-                NetworkState.Success(moviesDb)
-            }
+           } else {
+               //si esta vacio, que recupere los datos de la db
+               val moviesDb = getMoviesFromDataBase()
+               NetworkState.Success(moviesDb)
+           }
+           success
 
         } catch (e: Throwable) {
             NetworkState.Error(e)
@@ -73,6 +74,23 @@ class MoviesRepository @Inject constructor(
     suspend fun getNowPlayingMoviesFromApi(): NetworkState<List<DomainModel>> =
         try {
             var moviesApi = api.getNowPlayingMovies().results
+            if (moviesApi.isNotEmpty()) {
+                cleanList()
+                insertMovies(moviesApi.map { it.toMovieDataBase() })
+                NetworkState.Success(moviesApi.map { it.toDomainMovie() })
+
+            } else {
+                //si esta vacio, que recupere los datos de la db
+                val moviesDb = getMoviesFromDataBase()
+                NetworkState.Success(moviesDb)
+            }
+
+        } catch (e: Throwable) {
+            NetworkState.Error(e)
+        }
+    suspend fun getAllMoviesFromApi(): NetworkState<List<DomainModel>> =
+        try {
+            var moviesApi = api.getAllMovies().results
             if (moviesApi.isNotEmpty()) {
                 cleanList()
                 insertMovies(moviesApi.map { it.toMovieDataBase() })

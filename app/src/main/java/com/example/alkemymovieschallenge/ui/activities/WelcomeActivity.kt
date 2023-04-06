@@ -14,6 +14,9 @@ class WelcomeActivity : AppCompatActivity() {
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        onClick()
+    }
+    private fun onClick(){
         binding.btnNextActivity.setOnClickListener {
             toTheActivity()
         }

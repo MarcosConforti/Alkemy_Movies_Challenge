@@ -1,4 +1,4 @@
-package com.example.alkemymovieschallenge.domain
+package com.example.alkemymovieschallenge.domain.list
 
 import com.example.alkemymovieschallenge.domain.model.DomainModel
 
@@ -7,5 +7,6 @@ data class MovieList(
      val upComing:List<DomainModel>,
      val nowPlaying:List<DomainModel>,
      val topRated:List<DomainModel>,
+     //val allMovies:List<DomainModel>
 
 )

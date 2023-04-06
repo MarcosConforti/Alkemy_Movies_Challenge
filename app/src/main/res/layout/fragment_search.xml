@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.SeriesFragment">
-
+    tools:context=".ui.fragments.SearchFragment">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
-        style="@style/searchViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,7 +22,9 @@
         android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchView">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,41 +32,16 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_popular"
+                android:id="@+id/tv_allMovies"
                 style="@style/textStyle"
-                android:hint="@string/popularSeries"/>
+                android:hint="@string/allMovies"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_popularTv"
+                android:id="@+id/rv_popular"
                 style="@style/recyclerViewStyle"/>
 
-            <TextView
-                android:id="@+id/tv_topRated"
-                style="@style/textStyle"
-                android:hint="@string/topRatedSeries"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_topRatedTv"
-                style="@style/recyclerViewStyle" />
-
-            <TextView
-                android:id="@+id/tv_airingToday"
-                style="@style/textStyle"
-                android:hint="@string/airingToday"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_airingTodayTv"
-                style="@style/recyclerViewStyle"/>
-
-            <TextView
-                android:id="@+id/tv_onTheAir"
-                style="@style/textStyle"
-                android:hint="@string/onTheAir"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_onTheAirTv"
-                style="@style/recyclerViewStyle"/>
         </LinearLayout>
     </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
