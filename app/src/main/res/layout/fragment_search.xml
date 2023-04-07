@@ -9,17 +9,14 @@
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/searchViewStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/black"
+        style="@style/scrollViewStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -39,7 +36,6 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_popular"
                 style="@style/recyclerViewStyle"/>
-
         </LinearLayout>
     </ScrollView>
 

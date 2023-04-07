@@ -41,8 +41,6 @@ class MoviesFragment : Fragment(), OnClickMoviesListener {
 
     private val moviesViewModel: MoviesViewModel by viewModels()
 
-    private lateinit var dialog: AlertDialog
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,7 +65,6 @@ class MoviesFragment : Fragment(), OnClickMoviesListener {
             viewLifecycleOwner,
             Observer { movieState ->
                 if (movieState is NetworkState.Success) {
-                    dialog.dismiss()
                     popularMoviesAdapter.setPopularMoviesList(movieState.data.popular)
                     topRatedMoviesAdapter.setTopRatedMoviesList(movieState.data.topRated)
                     upComingMoviesAdapter.setUpComingMoviesList(movieState.data.upComing)

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#181B47"
+    android:background="@color/recycler_background"
     tools:context=".ui.fragments.MovieDetailFragment">
 
     <ScrollView
@@ -43,7 +43,7 @@
                 android:id="@+id/tv_voteAverage"
                 style="@style/voteAverageStyle"
                 android:hint="@string/voteAverage"
-                android:textSize="25sp"
+                android:textSize="26sp"
                 android:textStyle="normal" />
 
             <TextView
@@ -56,10 +56,7 @@
 
             <Button
                 android:id="@+id/btn_addToFavorites"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Add to Favorites" />
+                style="@style/bottomDetailStyle" />
         </LinearLayout>
     </ScrollView>
 

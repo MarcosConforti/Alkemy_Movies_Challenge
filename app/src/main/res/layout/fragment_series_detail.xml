@@ -8,6 +8,7 @@
     android:background="#181B47">
 
     <ScrollView
+
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -16,7 +17,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <ImageView
@@ -27,58 +28,34 @@
 
             <TextView
                 android:id="@+id/tv_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
+                style="@style/detailStyle"
                 android:hint="@string/title"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_releaseDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
+                style="@style/detailStyle"
                 android:hint="@string/releaseDate"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
                 android:textSize="25sp"
                 android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/tv_voteAverage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
-                android:hint="Vote Average"
-                android:textColor="#D2DA2E"
-                android:textColorHint="#D2DA2E"
-                android:textSize="25sp"
-                android:textStyle="normal" />
+                style="@style/voteAverageStyle"
+                android:textSize="26sp"
+                android:textStyle="normal"/>
 
             <TextView
                 android:id="@+id/tv_overview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
+                style="@style/detailStyle"
                 android:hint="@string/overview"
                 android:inputType="textMultiLine"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
                 android:textSize="20sp"
                 android:textStyle="italic" />
             <Button
                 android:id="@+id/btn_addToFavorites"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Add to Favorites"
-                android:layout_marginTop="10dp"/>
+                style="@style/bottomDetailStyle"/>
         </LinearLayout>
     </ScrollView>
 
