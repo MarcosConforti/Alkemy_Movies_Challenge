@@ -7,6 +7,5 @@ data class MovieList(
      val upComing:List<DomainModel>,
      val nowPlaying:List<DomainModel>,
      val topRated:List<DomainModel>,
-     //val allMovies:List<DomainModel>
 
 )

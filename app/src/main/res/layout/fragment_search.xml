@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.SearchFragment">
+    tools:context=".ui.fragments.search.SearchFragment">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
@@ -34,7 +34,7 @@
                 android:hint="@string/allMovies"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_popular"
+                android:id="@+id/rv_allMovies"
                 style="@style/recyclerViewStyle"/>
         </LinearLayout>
     </ScrollView>

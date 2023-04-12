@@ -1,19 +1,13 @@
-package com.example.alkemymovieschallenge.ui.fragments
+package com.example.alkemymovieschallenge.ui.fragments.movies
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.FragmentMoviesBinding
@@ -24,7 +18,6 @@ import com.example.alkemymovieschallenge.ui.recyclerViews.movies.nowPlaying.NowP
 import com.example.alkemymovieschallenge.ui.recyclerViews.movies.popular.PopularMoviesAdapter
 import com.example.alkemymovieschallenge.ui.recyclerViews.movies.topRated.TopRatedMoviesAdapter
 import com.example.alkemymovieschallenge.ui.recyclerViews.movies.upComing.UpComingMoviesAdapter
-import com.example.alkemymovieschallenge.ui.recyclerViews.search.movies.AllMoviesAdapter
 import com.example.alkemymovieschallenge.ui.viewModels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -46,7 +39,7 @@ class MoviesFragment : Fragment(), OnClickMoviesListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMoviesBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -62,18 +55,19 @@ class MoviesFragment : Fragment(), OnClickMoviesListener {
 
     private fun configObservers() {
         moviesViewModel.getMoviesLiveData.observe(
-            viewLifecycleOwner,
-            Observer { movieState ->
-                if (movieState is NetworkState.Success) {
-                    popularMoviesAdapter.setPopularMoviesList(movieState.data.popular)
-                    topRatedMoviesAdapter.setTopRatedMoviesList(movieState.data.topRated)
-                    upComingMoviesAdapter.setUpComingMoviesList(movieState.data.upComing)
-                    nowPlayingMoviesAdapter.setNowPlayingMoviesList(movieState.data.nowPlaying)
-                } else {
+            viewLifecycleOwner
+        //cambiamos el Observe por una funcion lambda
+        ) { movieState ->
+            if (movieState is NetworkState.Success) {
+                popularMoviesAdapter.setPopularMoviesList(movieState.data.popular)
+                topRatedMoviesAdapter.setTopRatedMoviesList(movieState.data.topRated)
+                upComingMoviesAdapter.setUpComingMoviesList(movieState.data.upComing)
+                nowPlayingMoviesAdapter.setNowPlayingMoviesList(movieState.data.nowPlaying)
+            } else {
 
-                    Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
-                }
-            })
+                Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
+            }
+        }
 
     }
 

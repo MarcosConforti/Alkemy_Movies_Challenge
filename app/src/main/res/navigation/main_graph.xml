@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/moviesFragment"
-        android:name="com.example.alkemymovieschallenge.ui.fragments.MoviesFragment"
+        android:name="com.example.alkemymovieschallenge.ui.fragments.movies.MoviesFragment"
         android:label="fragment_movies"
         tools:layout="@layout/fragment_movies" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/seriesFragment"
-        android:name="com.example.alkemymovieschallenge.ui.fragments.SeriesFragment"
+        android:name="com.example.alkemymovieschallenge.ui.fragments.series.SeriesFragment"
         android:label="fragment_series"
         tools:layout="@layout/fragment_series" >
         <action
@@ -25,17 +25,22 @@
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.example.alkemymovieschallenge.ui.fragments.FavoritesFragment"
+        android:name="com.example.alkemymovieschallenge.ui.fragments.favorites.FavoritesFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" />
     <fragment
         android:id="@+id/movieDetailFragment"
-        android:name="com.example.alkemymovieschallenge.ui.fragments.MovieDetailFragment"
+        android:name="com.example.alkemymovieschallenge.ui.fragments.movies.MovieDetailFragment"
         android:label="fragment_movies_detail"
         tools:layout="@layout/fragment_movies_detail" />
     <fragment
         android:id="@+id/seriesDetailFragment"
-        android:name="com.example.alkemymovieschallenge.ui.fragments.SeriesDetailFragment"
+        android:name="com.example.alkemymovieschallenge.ui.fragments.series.SeriesDetailFragment"
         android:label="fragment_series_detail"
         tools:layout="@layout/fragment_series_detail" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.alkemymovieschallenge.ui.fragments.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
 </navigation>

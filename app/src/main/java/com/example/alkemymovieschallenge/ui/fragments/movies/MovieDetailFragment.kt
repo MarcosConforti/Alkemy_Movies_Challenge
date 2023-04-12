@@ -1,13 +1,11 @@
-package com.example.alkemymovieschallenge.ui.fragments
+package com.example.alkemymovieschallenge.ui.fragments.movies
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.alkemymovieschallenge.data.database.entities.FavoritesEntities
 import com.example.alkemymovieschallenge.databinding.FragmentMoviesDetailBinding
 import com.example.alkemymovieschallenge.domain.model.DomainModel
 import com.example.alkemymovieschallenge.ui.viewModels.FavoriteViewModel
@@ -16,7 +14,6 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_movies_detail.*
 import kotlinx.android.synthetic.main.item_grid_list.tv_title
 import kotlinx.android.synthetic.main.item_grid_list.tv_voteAverage
-import java.util.*
 
 class MovieDetailFragment : Fragment() {
 
@@ -54,14 +51,5 @@ class MovieDetailFragment : Fragment() {
             tv_voteAverage.text = it?.voteAverage
             Picasso.get().load(Constants.IMAGE_BASE + it?.image).into(binding.ivImage)
         }
-        var isCheck = false
-
-       /* binding.btnAddToFavorites.setOnClickListener {
-            favoriteViewModel.favoriteLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                it ->
-            })
-            Toast.makeText(requireContext(), "Se ha añadido a favoritos", Toast.LENGTH_SHORT).show()
-        }*/
     }
-
 }

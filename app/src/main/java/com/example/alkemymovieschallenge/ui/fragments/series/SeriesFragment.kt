@@ -1,4 +1,4 @@
-package com.example.alkemymovieschallenge.ui.fragments
+package com.example.alkemymovieschallenge.ui.fragments.series
 
 import android.os.Bundle
 import android.view.LayoutInflater
