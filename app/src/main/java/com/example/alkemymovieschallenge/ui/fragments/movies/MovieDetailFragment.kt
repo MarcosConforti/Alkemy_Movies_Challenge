@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.alkemymovieschallenge.databinding.FragmentMoviesDetailBinding
@@ -12,6 +13,8 @@ import com.example.alkemymovieschallenge.ui.viewModels.FavoriteViewModel
 import com.example.alkemymovieschallenge.utils.Constants
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_movies_detail.*
+import kotlinx.android.synthetic.main.fragment_movies_detail.tv_releaseDate
+import kotlinx.android.synthetic.main.fragment_series_detail.*
 import kotlinx.android.synthetic.main.item_grid_list.tv_title
 import kotlinx.android.synthetic.main.item_grid_list.tv_voteAverage
 
@@ -50,6 +53,8 @@ class MovieDetailFragment : Fragment() {
             tv_releaseDate.text = it?.releaseDate
             tv_voteAverage.text = it?.voteAverage
             Picasso.get().load(Constants.IMAGE_BASE + it?.image).into(binding.ivImage)
+            binding.ivBigImage.scaleType = ImageView.ScaleType.FIT_XY
+            Picasso.get().load(Constants.IMAGE_BASE + it?.image).into(binding.ivBigImage)
         }
     }
 }
