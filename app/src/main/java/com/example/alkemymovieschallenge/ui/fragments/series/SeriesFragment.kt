@@ -14,11 +14,11 @@ import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.FragmentSeriesBinding
 import com.example.alkemymovieschallenge.domain.NetworkState
 import com.example.alkemymovieschallenge.domain.model.DomainTvModel
-import com.example.alkemymovieschallenge.ui.recyclerViews.OnClickTvListener
-import com.example.alkemymovieschallenge.ui.recyclerViews.tv.airing.AiringTodayTvAdapter
-import com.example.alkemymovieschallenge.ui.recyclerViews.tv.onTheAir.OnTheAirTvAdapter
-import com.example.alkemymovieschallenge.ui.recyclerViews.tv.popular.PopularTvAdapter
-import com.example.alkemymovieschallenge.ui.recyclerViews.tv.topRated.TopRatedTvAdapter
+import com.example.alkemymovieschallenge.ui.adapters.OnClickTvListener
+import com.example.alkemymovieschallenge.ui.adapters.tv.airing.AiringTodayTvAdapter
+import com.example.alkemymovieschallenge.ui.adapters.tv.onTheAir.OnTheAirTvAdapter
+import com.example.alkemymovieschallenge.ui.adapters.tv.popular.PopularTvAdapter
+import com.example.alkemymovieschallenge.ui.adapters.tv.topRated.TopRatedTvAdapter
 import com.example.alkemymovieschallenge.ui.viewModels.SeriesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
