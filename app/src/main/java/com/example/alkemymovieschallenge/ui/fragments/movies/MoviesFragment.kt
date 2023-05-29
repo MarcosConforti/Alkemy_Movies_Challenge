@@ -13,11 +13,11 @@ import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.FragmentMoviesBinding
 import com.example.alkemymovieschallenge.domain.NetworkState
 import com.example.alkemymovieschallenge.domain.model.DomainModel
-import com.example.alkemymovieschallenge.ui.recyclerViews.OnClickMoviesListener
-import com.example.alkemymovieschallenge.ui.recyclerViews.movies.nowPlaying.NowPlayingMoviesAdapter
-import com.example.alkemymovieschallenge.ui.recyclerViews.movies.popular.PopularMoviesAdapter
-import com.example.alkemymovieschallenge.ui.recyclerViews.movies.topRated.TopRatedMoviesAdapter
-import com.example.alkemymovieschallenge.ui.recyclerViews.movies.upComing.UpComingMoviesAdapter
+import com.example.alkemymovieschallenge.ui.adapters.OnClickMoviesListener
+import com.example.alkemymovieschallenge.ui.adapters.movies.nowPlaying.NowPlayingMoviesAdapter
+import com.example.alkemymovieschallenge.ui.adapters.movies.popular.PopularMoviesAdapter
+import com.example.alkemymovieschallenge.ui.adapters.movies.topRated.TopRatedMoviesAdapter
+import com.example.alkemymovieschallenge.ui.adapters.movies.upComing.UpComingMoviesAdapter
 import com.example.alkemymovieschallenge.ui.viewModels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

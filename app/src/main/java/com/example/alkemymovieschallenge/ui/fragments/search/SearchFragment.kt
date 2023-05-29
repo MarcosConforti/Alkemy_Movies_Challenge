@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.alkemymovieschallenge.databinding.FragmentSearchBinding
 import com.example.alkemymovieschallenge.domain.NetworkState
 import com.example.alkemymovieschallenge.domain.model.DomainModel
-import com.example.alkemymovieschallenge.ui.recyclerViews.OnClickMoviesListener
-import com.example.alkemymovieschallenge.ui.recyclerViews.search.movies.AllMoviesAdapter
+import com.example.alkemymovieschallenge.ui.adapters.OnClickMoviesListener
+import com.example.alkemymovieschallenge.ui.adapters.search.movies.AllMoviesAdapter
 import com.example.alkemymovieschallenge.ui.viewModels.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

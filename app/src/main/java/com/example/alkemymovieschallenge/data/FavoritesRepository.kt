@@ -10,9 +10,7 @@ class FavoritesRepository @Inject constructor(
     private val favoritesDao: FavoritesDao
 ) {
 
-    suspend fun addToFavorites(favorites: FavoritesEntities) {
-        val favorites =favoritesDao.insert(favorites)
-    }
+    suspend fun addToFavorites(favorites: FavoritesEntities) = favoritesDao.insert(favorites)
 
     suspend fun checkFavorite(id: String) = favoritesDao.checkFavorites(id)
 
