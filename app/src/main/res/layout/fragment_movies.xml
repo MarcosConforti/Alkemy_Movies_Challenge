@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.movies.MoviesFragment">
+    tools:context=".ui.fragments.MoviesFragment">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
@@ -13,14 +12,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="@style/progressBarStyle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchView" />
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -55,11 +46,11 @@
             <TextView
                 android:id="@+id/tv_upComing"
                 style="@style/textStyle"
-                android:hint="@string/upComingMovies" />
+                android:hint="@string/upComingMovies"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_upComing"
-                style="@style/recyclerViewStyle" />
+                style="@style/recyclerViewStyle"/>
 
             <TextView
                 android:id="@+id/tv_nowPlaying"

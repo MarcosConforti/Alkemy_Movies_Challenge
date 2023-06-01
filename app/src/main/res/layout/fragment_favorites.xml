@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.favorites.FavoritesFragment">
+    tools:context=".ui.fragments.FavoritesFragment">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
@@ -46,4 +46,6 @@
                 style="@style/recyclerViewStyle" />
         </LinearLayout>
     </ScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
