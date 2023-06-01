@@ -8,6 +8,9 @@ import com.example.alkemymovieschallenge.domain.NetworkState
 import com.example.alkemymovieschallenge.domain.model.DomainModel
 import com.example.alkemymovieschallenge.domain.useCase.search.GetAllMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,8 +18,9 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(private val getAllMoviesUseCase: GetAllMoviesUseCase) :
     ViewModel() {
 
-    private val _getMoviesLiveData = MutableLiveData<NetworkState<List<DomainModel>?>>()
-    val getMoviesLiveData: LiveData<NetworkState<List<DomainModel>?>> = _getMoviesLiveData
+    private val _getMoviesLiveData =
+        MutableStateFlow<NetworkState<List<DomainModel>>>(NetworkState.Loading)
+    val getMoviesLiveData: StateFlow<NetworkState<List<DomainModel>>> = _getMoviesLiveData
 
     init {
         callMoviesUseCase()
@@ -24,13 +28,18 @@ class SearchViewModel @Inject constructor(private val getAllMoviesUseCase: GetAl
 
     private fun callMoviesUseCase() {
         viewModelScope.launch {
+            getAllMoviesUseCase().collect { allMoviesResult ->
+                when (allMoviesResult) {
+                    NetworkState.Loading -> TODO()
+                    is NetworkState.Success -> {
+                        val movieList = allMoviesResult.data
+                        _getMoviesLiveData.value = NetworkState.Success(movieList)
+                    }
 
-            val allMoviesResult = getAllMoviesUseCase()
-
-            if (allMoviesResult is NetworkState.Success) {
-                _getMoviesLiveData.value = NetworkState.Success(allMoviesResult.data)
-            } else {
-                _getMoviesLiveData.value = NetworkState.Error(Error())
+                    is NetworkState.Error -> {
+                        _getMoviesLiveData.value = NetworkState.Error(Error())
+                    }
+                }
             }
         }
     }

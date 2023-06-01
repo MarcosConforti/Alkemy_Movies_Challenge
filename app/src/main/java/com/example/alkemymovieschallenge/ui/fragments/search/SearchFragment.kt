@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.alkemymovieschallenge.databinding.FragmentSearchBinding
 import com.example.alkemymovieschallenge.domain.NetworkState
@@ -17,6 +17,7 @@ import com.example.alkemymovieschallenge.ui.adapters.OnClickMoviesListener
 import com.example.alkemymovieschallenge.ui.adapters.search.movies.AllMoviesAdapter
 import com.example.alkemymovieschallenge.ui.viewModels.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchFragment : Fragment(), OnClickMoviesListener, SearchView.OnQueryTextListener {
@@ -44,27 +45,31 @@ class SearchFragment : Fragment(), OnClickMoviesListener, SearchView.OnQueryText
         configRecycler()
         configObservers()
     }
+
     private fun configRecycler() {
         binding.rvAllMovies.adapter = allMoviesAdapter
         val manager = GridLayoutManager(this.requireContext(), 2)
         binding.rvAllMovies.layoutManager = manager
-
     }
+
     private fun configObservers() {
-        searchViewModel.getMoviesLiveData.observe(
-            viewLifecycleOwner,
-            Observer { movieState ->
-                if (movieState is NetworkState.Success) {
-                    movieState.data?.let { allMoviesAdapter.setAllMoviesList(it) }
-                } else {
-                    Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
+        viewLifecycleOwner.lifecycleScope.launch {
+            searchViewModel.getMoviesLiveData.collect { movieState ->
+                when (movieState) {
+                    NetworkState.Loading -> {}
+                    is NetworkState.Success -> {
+                        movieState.data?.let { allMoviesAdapter.setAllMoviesList(it) }
+                    }
+                    is NetworkState.Error -> {
+                        Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
+                    }
                 }
-            })
+            }
+        }
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         return false
-
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {

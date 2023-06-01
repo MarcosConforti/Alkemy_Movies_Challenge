@@ -22,9 +22,7 @@ class MainActivity : AppCompatActivity(){
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         setNavHostFragment()
-
 
     }
     private fun setNavHostFragment(){
@@ -34,5 +32,4 @@ class MainActivity : AppCompatActivity(){
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.btn_navigation_view)
         setupWithNavController(bottomNavigationView,navController)
     }
-
 }
