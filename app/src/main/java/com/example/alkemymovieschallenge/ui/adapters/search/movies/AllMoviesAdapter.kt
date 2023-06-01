@@ -14,12 +14,7 @@ class AllMoviesAdapter(
     private var onClickMoviesListener: OnClickMoviesListener
 ) : RecyclerView.Adapter<AllMoviesViewHolder>(), Filterable {
 
-    private val filter = MoviesListFilter(this)
     var filteredAllMoviesList: List<DomainModel> = emptyList()
-
-    init {
-        filteredAllMoviesList = allMoviesList
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllMoviesViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -29,7 +24,7 @@ class AllMoviesAdapter(
     override fun onBindViewHolder(holder: AllMoviesViewHolder, position: Int) {
         val item = filteredAllMoviesList[position]
         holder.render(item)
-        holder.itemView.setOnClickListener { onClickMoviesListener?.onMoviesClicked(item) }
+        holder.itemView.setOnClickListener { onClickMoviesListener.onMoviesClicked(item) }
     }
 
     override fun getItemCount(): Int = filteredAllMoviesList.size
@@ -40,7 +35,25 @@ class AllMoviesAdapter(
         notifyDataSetChanged()
     }
 
-    override fun getFilter(): Filter = filter
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val filteredList = if (constraint.isNullOrEmpty()) {
+                    allMoviesList
+                } else {
+                    allMoviesList.filter { it.title.contains(constraint, true) }
+                }
+                val filterResults = FilterResults()
+                filterResults.values = filteredList
+                return filterResults
+            }
 
-
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                @Suppress("UNCHECKED_CAST")
+                filteredAllMoviesList = results?.values as List<DomainModel>?
+                    ?: emptyList()
+                notifyDataSetChanged()
+            }
+        }
+    }
 }
