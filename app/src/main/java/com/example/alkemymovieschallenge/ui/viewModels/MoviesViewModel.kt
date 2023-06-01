@@ -1,7 +1,5 @@
 package com.example.alkemymovieschallenge.ui.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.alkemymovieschallenge.domain.NetworkState
@@ -11,6 +9,10 @@ import com.example.alkemymovieschallenge.domain.useCase.movies.GetPopularMoviesU
 import com.example.alkemymovieschallenge.domain.useCase.movies.GetTopRatedMoviesUseCase
 import com.example.alkemymovieschallenge.domain.useCase.movies.GetUpComingMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,15 +25,12 @@ class MoviesViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private val _getMoviesLiveData = MutableLiveData<NetworkState<MovieList>>()
+    private val _getMoviesLiveData = MutableStateFlow<NetworkState<MovieList>>(NetworkState.Loading)
 
-    val getMoviesLiveData: LiveData<NetworkState<MovieList>> = _getMoviesLiveData
-
-
+    val getMoviesLiveData: StateFlow<NetworkState<MovieList>> = _getMoviesLiveData
     init {
         callMoviesUseCase()
     }
-
     private fun callMoviesUseCase() {
         viewModelScope.launch {
 
@@ -40,22 +39,27 @@ class MoviesViewModel @Inject constructor(
             val topRatedResult = getTopRatedMoviesUseCase()
             val nowPlayingResult = getNowPlayingMoviesUseCase()
 
-            if (popularResult is NetworkState.Success &&
-                upComingResult is NetworkState.Success &&
-                topRatedResult is NetworkState.Success &&
-                nowPlayingResult is NetworkState.Success
-            ) {
-                _getMoviesLiveData.value = NetworkState.Success(
-                    MovieList(
-                        popular = popularResult.data,
-                        upComing = upComingResult.data,
-                        topRated = topRatedResult.data,
-                        nowPlaying = nowPlayingResult.data
+            combine(
+                popularResult, topRatedResult,
+                upComingResult, nowPlayingResult
+            ) { popular, topRated, upComing, nowPlaying ->
+                if (popular is NetworkState.Success &&
+                    topRated is NetworkState.Success &&
+                    upComing is NetworkState.Success &&
+                    nowPlaying is NetworkState.Success
+                ) {
+                    _getMoviesLiveData.value = NetworkState.Success(
+                        MovieList(
+                            popular = popular.data,
+                            topRated = topRated.data,
+                            upComing = upComing.data,
+                            nowPlaying = nowPlaying.data
+                        )
                     )
-                )
-            } else {
-                _getMoviesLiveData.value = NetworkState.Error(Error())
-            }
+                } else {
+                    _getMoviesLiveData.value = NetworkState.Error(Error())
+                }
+            }.collect()
         }
     }
 }

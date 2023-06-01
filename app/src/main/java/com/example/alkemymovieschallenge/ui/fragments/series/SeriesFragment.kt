@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alkemymovieschallenge.R
@@ -21,6 +22,7 @@ import com.example.alkemymovieschallenge.ui.adapters.tv.popular.PopularTvAdapter
 import com.example.alkemymovieschallenge.ui.adapters.tv.topRated.TopRatedTvAdapter
 import com.example.alkemymovieschallenge.ui.viewModels.SeriesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SeriesFragment : Fragment(), OnClickTvListener {
@@ -35,10 +37,8 @@ class SeriesFragment : Fragment(), OnClickTvListener {
 
     private val seriesViewModel: SeriesViewModel by viewModels()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -54,24 +54,33 @@ class SeriesFragment : Fragment(), OnClickTvListener {
         super.onViewCreated(view, savedInstanceState)
 
         configRecycler()
-
-        seriesViewModel.getSeriesLiveData.observe(viewLifecycleOwner, Observer { movieState ->
-            if (movieState is NetworkState.Success) {
-                popularTvAdapter.setPopularTvList(movieState.data.popularTv)
-                onTheAirTvAdapter.setOnTheAirTvList(movieState.data.onTheAir)
-                airingTodayTvAdapter.setAiringTodayTvList(movieState.data.airingToday)
-                topRatedTvAdapter.setTopRatedTvList(movieState.data.topRated)
-            }
-            else{
-                Toast.makeText(requireContext(),"error", Toast.LENGTH_SHORT).show()
-            }
-        })
+        configObservers()
     }
 
+    private fun configObservers() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            seriesViewModel.getSeriesLiveData.collect { seriesState ->
+                when (seriesState) {
+                    NetworkState.Loading -> binding.progressBar.isVisible = true
+                    is NetworkState.Success -> {
+                        binding.progressBar.isVisible = false
+                        popularTvAdapter.setPopularTvList(seriesState.data.popularTv)
+                        onTheAirTvAdapter.setOnTheAirTvList(seriesState.data.onTheAir)
+                        airingTodayTvAdapter.setAiringTodayTvList(seriesState.data.airingToday)
+                        topRatedTvAdapter.setTopRatedTvList(seriesState.data.topRated)
+                    }
+                    is NetworkState.Error -> {
+                        binding.progressBar.isVisible = false
+                        Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
     override fun onTvClicked(series: DomainTvModel) {
-        val serieBundle = Bundle()
-        serieBundle.putParcelable("series", series)
-        findNavController().navigate(R.id.seriesDetailFragment, serieBundle)
+        val seriesBundle = Bundle()
+        seriesBundle.putParcelable("series", series)
+        findNavController().navigate(R.id.seriesDetailFragment, seriesBundle)
     }
 
     private fun configRecycler() {
@@ -107,6 +116,5 @@ class SeriesFragment : Fragment(), OnClickTvListener {
                 false
             )
         }
-
     }
 }

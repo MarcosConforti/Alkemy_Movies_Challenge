@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alkemymovieschallenge.R
@@ -20,6 +22,7 @@ import com.example.alkemymovieschallenge.ui.adapters.movies.topRated.TopRatedMov
 import com.example.alkemymovieschallenge.ui.adapters.movies.upComing.UpComingMoviesAdapter
 import com.example.alkemymovieschallenge.ui.viewModels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MoviesFragment : Fragment(), OnClickMoviesListener {
@@ -33,7 +36,6 @@ class MoviesFragment : Fragment(), OnClickMoviesListener {
     private var nowPlayingMoviesAdapter = NowPlayingMoviesAdapter(emptyList(), this)
 
     private val moviesViewModel: MoviesViewModel by viewModels()
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,28 +56,30 @@ class MoviesFragment : Fragment(), OnClickMoviesListener {
     }
 
     private fun configObservers() {
-        moviesViewModel.getMoviesLiveData.observe(
-            viewLifecycleOwner
-        //cambiamos el Observe por una funcion lambda
-        ) { movieState ->
-            if (movieState is NetworkState.Success) {
-                popularMoviesAdapter.setPopularMoviesList(movieState.data.popular)
-                topRatedMoviesAdapter.setTopRatedMoviesList(movieState.data.topRated)
-                upComingMoviesAdapter.setUpComingMoviesList(movieState.data.upComing)
-                nowPlayingMoviesAdapter.setNowPlayingMoviesList(movieState.data.nowPlaying)
-            } else {
-
-                Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
+        viewLifecycleOwner.lifecycleScope.launch {
+            moviesViewModel.getMoviesLiveData.collect { movieState ->
+                when (movieState) {
+                    NetworkState.Loading -> binding.progressBar.isVisible = true
+                    is NetworkState.Success -> {
+                        binding.progressBar.isVisible = false
+                        popularMoviesAdapter.setPopularMoviesList(movieState.data.popular)
+                        topRatedMoviesAdapter.setTopRatedMoviesList(movieState.data.topRated)
+                        upComingMoviesAdapter.setUpComingMoviesList(movieState.data.upComing)
+                        nowPlayingMoviesAdapter.setNowPlayingMoviesList(movieState.data.nowPlaying)
+                    }
+                    is NetworkState.Error ->{
+                        binding.progressBar.isVisible = false
+                        Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
-
     }
 
     override fun onMoviesClicked(movie: DomainModel) {
         val movieBundle = Bundle()
         movieBundle.putParcelable("movie", movie)
         findNavController().navigate(R.id.movieDetailFragment, movieBundle)
-
     }
 
     private fun configRecycler() {
@@ -112,5 +116,4 @@ class MoviesFragment : Fragment(), OnClickMoviesListener {
             )
         }
     }
-
 }
