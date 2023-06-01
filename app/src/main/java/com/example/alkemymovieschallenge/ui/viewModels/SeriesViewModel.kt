@@ -1,15 +1,13 @@
 package com.example.alkemymovieschallenge.ui.viewModels
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.alkemymovieschallenge.domain.NetworkState
 import com.example.alkemymovieschallenge.domain.list.TvList
 import com.example.alkemymovieschallenge.domain.useCase.tv.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,9 +20,9 @@ class SeriesViewModel @Inject constructor(
 ):
  ViewModel() {
 
-    private val _getSeriesLiveData = MutableStateFlow<NetworkState<TvList>>(NetworkState.Loading)
+    private val _getSeriesLiveData = MutableLiveData<NetworkState<TvList>>()
 
-    val getSeriesLiveData: StateFlow<NetworkState<TvList>> = _getSeriesLiveData
+    val getSeriesLiveData: LiveData<NetworkState<TvList>> = _getSeriesLiveData
 
     init {
         callSeriesUseCase()
@@ -36,28 +34,22 @@ class SeriesViewModel @Inject constructor(
             val onTheAirResult = getOnTheAirTvUseCase()
             val topRatedResult = getTopRatedTvUseCase()
             val airingTodayResult = getAiringTodayTvUseCase()
+            if (popularTvResult is NetworkState.Success && onTheAirResult is NetworkState.Success
+                && topRatedResult is NetworkState.Success &&
+                airingTodayResult is NetworkState.Success
+            ) {
+                _getSeriesLiveData.value = NetworkState.Success(
+                    TvList(
+                    popularTv = popularTvResult.data,
+                    onTheAir = onTheAirResult.data,
+                    topRated = topRatedResult.data,
+                    airingToday = airingTodayResult.data
+                )
+                )
+            }else{
+                _getSeriesLiveData.value = NetworkState.Error(Error())
+            }
 
-            combine(popularTvResult,onTheAirResult,
-                topRatedResult,airingTodayResult){
-                popular,onTheAir,
-                topRated,airingToday ->
-                if (popular is NetworkState.Success &&
-                    onTheAir is NetworkState.Success &&
-                    topRated is NetworkState.Success &&
-                    airingToday is NetworkState.Success
-                ) {
-                    _getSeriesLiveData.value = NetworkState.Success(
-                        TvList(
-                            popularTv = popular.data,
-                            onTheAir = onTheAir.data,
-                            topRated = topRated.data,
-                            airingToday = airingToday.data
-                        )
-                    )
-                }else{
-                    _getSeriesLiveData.value = NetworkState.Error(Error())
-                }
-            }.collect()
         }
     }
 }

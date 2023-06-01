@@ -1,48 +1,30 @@
 <resources>
     <string name="app_name">Alkemy Movies Challenge</string>
-
-    <!-- Welcome Activity. -->
-    <string name="go">Go!</string>
-    <string name="tmdb">The Movie Data Base</string>
-    <string name="about">This is a simple Movie Catalog written in Kotlin using a modern Android Architecture</string>
-
-
-
-
-    <!-- Movies Fragment. -->
+    <string name="title">Title</string>
+    <string name="voteAverage">Vote Average</string>
+    <string name="overview">Overview</string>
+    <string name="releaseDate">Release Date</string>
     <string name="popularMovies">Popular Movies:</string>
     <string name="latestMovies">Latest Movies:</string>
     <string name="upComingMovies">Up Coming Movies:</string>
     <string name="topRatedMovies">Top Rated Movies:</string>
     <string name="nowPlayingMovies">Now Playing:</string>
-
-    <!-- Series Fragment. -->
+    <string name="favoriteMovies">Favorite Movies:</string>
     <string name="popularSeries">Popular Series:</string>
     <string name="latestSeries">Latest Series:</string>
     <string name="airingToday">TV Airing Today:</string>
     <string name="topRatedSeries">Top Rated Series:</string>
     <string name="onTheAir">TV On The Air:</string>
-
-    <!-- Favorites Fragment. -->
-    <string name="favoriteMovies">Favorite Movies:</string>
     <string name="favoriteSeries">Favorite Series:</string>
-
-    <!-- Detail Fragment. -->
-    <string name="title">Title</string>
-    <string name="voteAverage">Vote Average</string>
-    <string name="overview">Overview</string>
-    <string name="releaseDate">Release Date</string>
-    <string name="favorites">Favorites</string>
-    <string name="watchTrailer">Trailer</string>
-
-    <!-- Search Fragment. -->
     <string name="allMovies">All Movies</string>
-
-    <!-- Nav Fragment. -->
     <string name="movies">Movies</string>
     <string name="series">Series</string>
+    <string name="favorites">Favorites</string>
     <string name="search">Search</string>
-
+    <string name="go">Go!</string>
+    <string name="tmdb">The Movie Data Base</string>
+    <string name="about">This is a simple Movie Catalog written in Kotlin using a modern Android Architecture</string>
+    <string name="addToFavorites">Add To Favorites</string>
 
 
 </resources>

@@ -18,6 +18,8 @@ interface FavoritesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavorites(favorites:List<FavoritesEntities>)
 
+    //insertar una pelicula
+
     @Query("DELETE FROM favorites_table WHERE id = :id")
     suspend fun deleteFromFavorites(id: String):Int
 }
