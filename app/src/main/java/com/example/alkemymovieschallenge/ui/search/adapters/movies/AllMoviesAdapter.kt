@@ -6,6 +6,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alkemymovieschallenge.R
+import com.example.alkemymovieschallenge.ui.favorites.adapter.movies.FavoritesMoviesViewHolder
 import com.example.alkemymovieschallenge.ui.model.MoviesUIModel
 import com.example.alkemymovieschallenge.ui.movies.adapters.OnClickMoviesListener
 

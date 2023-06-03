@@ -1,19 +1,24 @@
 package com.example.alkemymovieschallenge.ui.favorites
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.alkemymovieschallenge.data.database.entities.FavoritesEntities
+import com.example.alkemymovieschallenge.domain.NetworkState
+import com.example.alkemymovieschallenge.domain.model.DomainFavoritesModel
 import com.example.alkemymovieschallenge.domain.useCase.favorites.GetFavoriteUseCase
 import com.example.alkemymovieschallenge.domain.useCase.favorites.InsertFavoriteUseCase
 import com.example.alkemymovieschallenge.domain.useCase.favorites.IsCheckedFavoriteUseCase
 import com.example.alkemymovieschallenge.domain.useCase.favorites.RemoveToFavoriteUseCase
+import com.example.alkemymovieschallenge.ui.UIState
 import com.example.alkemymovieschallenge.ui.model.FavoritesUIModel
 import com.example.alkemymovieschallenge.ui.model.toUIFavorites
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class FavoriteViewModel @Inject constructor(
     private val getFavoriteUseCase: GetFavoriteUseCase,
     private val insertFavoriteUseCase: InsertFavoriteUseCase,
@@ -22,17 +27,26 @@ class FavoriteViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private val _favoritesUseCase = MutableLiveData<List<FavoritesUIModel>>()
+    private val _favoritesUseCase =
+        MutableStateFlow<UIState<List<FavoritesUIModel>>>(UIState.Loading)
 
-    val favoriteLiveData: LiveData<List<FavoritesUIModel>> = _favoritesUseCase
+    val favoriteLiveData: StateFlow<UIState<List<FavoritesUIModel>>> = _favoritesUseCase
 
     val verifyLiveData = MutableLiveData<Boolean>()
 
     fun getFavorites() {
         viewModelScope.launch {
-            val getFavoriteUseCase = getFavoriteUseCase()
-            if (getFavoriteUseCase.isNotEmpty()) {
-                _favoritesUseCase.value = getFavoriteUseCase.map { it.toUIFavorites() }
+            getFavoriteUseCase().collect { favorite ->
+               when(favorite){
+                   NetworkState.Loading -> {}
+                   is NetworkState.Success -> {
+                       val getFavorite = favorite.data.map { it.toUIFavorites() }
+                       _favoritesUseCase.value = UIState.Success(getFavorite)
+                   }
+                   is NetworkState.Error ->{
+                       _favoritesUseCase.value = UIState.Error(Error())
+                   }
+               }
             }
         }
     }
@@ -40,7 +54,7 @@ class FavoriteViewModel @Inject constructor(
     fun addToFavorites(favorite: FavoritesUIModel) {
         viewModelScope.launch {
             insertFavoriteUseCase.addToFavorites(
-                FavoritesEntities(
+                DomainFavoritesModel(
                     favorite.id,
                     favorite.title,
                     favorite.releaseDate,
@@ -57,6 +71,7 @@ class FavoriteViewModel @Inject constructor(
             removeToFavoriteUseCase.removeToFavorites(id)
         }
     }
+
     private suspend fun isFavorite(id: String): Boolean =
         isCheckedFavoriteUseCase.checkFavorites(id)
 

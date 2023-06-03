@@ -1,9 +1,13 @@
 package com.example.alkemymovieschallenge.data.repository
 
 import com.example.alkemymovieschallenge.data.database.dao.FavoritesDao
+import com.example.alkemymovieschallenge.domain.NetworkState
 import com.example.alkemymovieschallenge.domain.model.DomainFavoritesModel
+import com.example.alkemymovieschallenge.domain.model.toDomainFavoritesModel
 import com.example.alkemymovieschallenge.domain.model.toFavoritesEntities
 import com.example.alkemymovieschallenge.ui.model.toDomainFavorites
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 //esta clase funciona para seleccionar de donde el programa tomara las peliculas, si de la api o db
@@ -11,12 +15,14 @@ class FavoritesRepository @Inject constructor(
     private val favoritesDao: FavoritesDao
 ) {
 
-    suspend fun getFavorites(): List<DomainFavoritesModel> {
-        val favorites = favoritesDao.getFavorites()
-       return if (favorites.isNotEmpty()) {
-            favorites.map { it.toDomainFavorites() }
-        } else {
-            emptyList()
+    suspend fun getFavorites(): Flow<NetworkState<List<DomainFavoritesModel>>> {
+        return flow {
+            val favorites = favoritesDao.getFavorites()
+            if (favorites.isNotEmpty()) {
+               emit( NetworkState.Success(favorites.map { it.toDomainFavoritesModel()}))
+            } else {
+                emit(NetworkState.Success(emptyList()))
+            }
         }
     }
 

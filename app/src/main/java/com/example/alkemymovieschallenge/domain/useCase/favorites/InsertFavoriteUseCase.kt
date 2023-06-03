@@ -8,7 +8,7 @@ import javax.inject.Inject
 class InsertFavoriteUseCase @Inject constructor(private val favoritesRepository: FavoritesRepository) {
    /* suspend operator fun invoke(): List<DomainFavoritesModel> =
     favoritesRepository.getFavorites()*/
-    suspend fun addToFavorites(favorites: FavoritesEntities) =
+    suspend fun addToFavorites(favorites: DomainFavoritesModel) =
         favoritesRepository.addToFavorites(favorites)
 
   //  suspend fun checkFavorites(id:String) = favoritesRepository.checkFavorite(id)
