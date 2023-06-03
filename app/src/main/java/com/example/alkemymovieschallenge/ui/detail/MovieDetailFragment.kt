@@ -8,8 +8,8 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.alkemymovieschallenge.databinding.FragmentMoviesDetailBinding
-import com.example.alkemymovieschallenge.domain.model.DomainModel
 import com.example.alkemymovieschallenge.ui.favorites.FavoriteViewModel
+import com.example.alkemymovieschallenge.ui.model.MoviesUIModel
 import com.example.alkemymovieschallenge.utils.Constants
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_movies_detail.tv_releaseDate
@@ -20,7 +20,7 @@ class MovieDetailFragment : Fragment() {
     private var _binding: FragmentMoviesDetailBinding? = null
     private val binding get() = _binding!!
 
-    private var movie: DomainModel? = null
+    private var movie: MoviesUIModel? = null
 
     private val favoriteViewModel: FavoriteViewModel by viewModels()
 

@@ -3,7 +3,7 @@ package com.example.alkemymovieschallenge.ui.series
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.alkemymovieschallenge.domain.NetworkState
-import com.example.alkemymovieschallenge.domain.list.TvList
+import com.example.alkemymovieschallenge.ui.model.uiList.SeriesUIList
 import com.example.alkemymovieschallenge.domain.useCase.tv.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,9 +22,9 @@ class SeriesViewModel @Inject constructor(
 ):
  ViewModel() {
 
-    private val _getSeriesLiveData = MutableStateFlow<NetworkState<TvList>>(NetworkState.Loading)
+    private val _getSeriesLiveData = MutableStateFlow<NetworkState<SeriesUIList>>(NetworkState.Loading)
 
-    val getSeriesLiveData: StateFlow<NetworkState<TvList>> = _getSeriesLiveData
+    val getSeriesLiveData: StateFlow<NetworkState<SeriesUIList>> = _getSeriesLiveData
 
     init {
         callSeriesUseCase()
@@ -47,7 +47,7 @@ class SeriesViewModel @Inject constructor(
                     airingToday is NetworkState.Success
                 ) {
                     _getSeriesLiveData.value = NetworkState.Success(
-                        TvList(
+                        SeriesUIList(
                             popularTv = popular.data,
                             onTheAir = onTheAir.data,
                             topRated = topRated.data,

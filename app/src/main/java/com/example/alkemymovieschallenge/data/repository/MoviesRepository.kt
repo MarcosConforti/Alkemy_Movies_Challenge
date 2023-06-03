@@ -5,7 +5,7 @@ import com.example.alkemymovieschallenge.data.database.entities.MoviesEntities
 import com.example.alkemymovieschallenge.data.database.entities.toMovieDataBase
 import com.example.alkemymovieschallenge.data.api.APIService
 import com.example.alkemymovieschallenge.domain.NetworkState
-import com.example.alkemymovieschallenge.domain.model.DomainModel
+import com.example.alkemymovieschallenge.domain.model.DomainMoviesModel
 import com.example.alkemymovieschallenge.domain.model.toDomainMovie
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -16,7 +16,7 @@ class MoviesRepository @Inject constructor(
     private val api: APIService,
     private val moviesDao: MoviesDao
 ) {
-    suspend fun getPopularMoviesFromApi(): Flow<NetworkState<List<DomainModel>>> {
+    suspend fun getPopularMoviesFromApi(): Flow<NetworkState<List<DomainMoviesModel>>> {
         return flow {   //recupero las peliculas
             try {
                 var moviesApi = api.getPopularMovies().results
@@ -36,7 +36,7 @@ class MoviesRepository @Inject constructor(
         }
     }
 
-    suspend fun getTopRatedMoviesFromApi(): Flow<NetworkState<List<DomainModel>>> {
+    suspend fun getTopRatedMoviesFromApi(): Flow<NetworkState<List<DomainMoviesModel>>> {
         return flow {
             try {
                 var moviesApi = api.getTopRatedtMovies().results
@@ -57,7 +57,7 @@ class MoviesRepository @Inject constructor(
         }
     }
 
-    suspend fun getUpComingMoviesFromApi(): Flow<NetworkState<List<DomainModel>>> {
+    suspend fun getUpComingMoviesFromApi(): Flow<NetworkState<List<DomainMoviesModel>>> {
         return flow {
             try {
                 var moviesApi = api.getUpComingMovies().results
@@ -78,7 +78,7 @@ class MoviesRepository @Inject constructor(
         }
     }
 
-    suspend fun getNowPlayingMoviesFromApi(): Flow<NetworkState<List<DomainModel>>> {
+    suspend fun getNowPlayingMoviesFromApi(): Flow<NetworkState<List<DomainMoviesModel>>> {
         return flow {
             try {
                 var moviesApi = api.getNowPlayingMovies().results
@@ -99,7 +99,7 @@ class MoviesRepository @Inject constructor(
         }
     }
 
-    suspend fun getAllMoviesFromApi(): Flow<NetworkState<List<DomainModel>>> {
+    suspend fun getAllMoviesFromApi(): Flow<NetworkState<List<DomainMoviesModel>>> {
         return flow {
             try {
                 var moviesApi = api.getAllMovies().results
@@ -120,7 +120,7 @@ class MoviesRepository @Inject constructor(
         }
     }
 
-    suspend fun getMoviesFromDataBase(): List<DomainModel> {
+    suspend fun getMoviesFromDataBase(): List<DomainMoviesModel> {
         val response = moviesDao.getAllMovies()
         return response.map { it.toDomainMovie() }
     }
@@ -129,10 +129,7 @@ class MoviesRepository @Inject constructor(
         moviesDao.insertAll(movies)
     }
 
-
     suspend fun cleanList() {
         moviesDao.deleteAllMovies()
     }
-
-
 }

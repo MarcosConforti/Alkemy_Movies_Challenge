@@ -1,10 +1,10 @@
 package com.example.alkemymovieschallenge.domain.list
 
-import com.example.alkemymovieschallenge.domain.model.DomainModel
+import com.example.alkemymovieschallenge.domain.model.DomainMoviesModel
 
 data class MovieList(
-     val popular:List<DomainModel>,
-     val upComing:List<DomainModel>,
-     val nowPlaying:List<DomainModel>,
-     val topRated:List<DomainModel>,
+     val popular:List<DomainMoviesModel>,
+     val upComing:List<DomainMoviesModel>,
+     val nowPlaying:List<DomainMoviesModel>,
+     val topRated:List<DomainMoviesModel>,
 )

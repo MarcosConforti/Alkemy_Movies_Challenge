@@ -1,12 +1,13 @@
-package com.example.alkemymovieschallenge.domain.model
+package com.example.alkemymovieschallenge.ui.model
 
 import android.os.Parcelable
 import com.example.alkemymovieschallenge.data.database.entities.FavoritesEntities
 import com.example.alkemymovieschallenge.data.api.model.FavoritesModel
+import com.example.alkemymovieschallenge.domain.model.DomainFavoritesModel
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class DomainFavoritesModel(
+data class FavoritesUIModel(
     var id:Int = 0,
     val title: String,
     val voteAverage: String,
@@ -15,5 +16,5 @@ data class DomainFavoritesModel(
     val image: String
 ):Parcelable
 //funcion de extension para realizar los mapers
-fun FavoritesModel.toDomainFavorites() = DomainFavoritesModel(id.length,title, voteAverage,releaseDate,overview,image)
-fun DomainFavoritesModel.toFavoritesEntities() = FavoritesEntities(id,title, voteAverage,releaseDate,overview, image)
+fun DomainFavoritesModel.toUIFavorites() = FavoritesUIModel(id,title, voteAverage,releaseDate,overview,image)
+fun FavoritesEntities.toDomainFavorites() = DomainFavoritesModel(id,title, voteAverage,releaseDate,overview, image)

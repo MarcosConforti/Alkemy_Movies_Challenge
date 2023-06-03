@@ -11,8 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.alkemymovieschallenge.databinding.FragmentSearchBinding
-import com.example.alkemymovieschallenge.domain.NetworkState
-import com.example.alkemymovieschallenge.domain.model.DomainModel
+import com.example.alkemymovieschallenge.ui.UIState
+import com.example.alkemymovieschallenge.ui.model.MoviesUIModel
 import com.example.alkemymovieschallenge.ui.movies.adapters.OnClickMoviesListener
 import com.example.alkemymovieschallenge.ui.search.adapters.movies.AllMoviesAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,11 +55,11 @@ class SearchFragment : Fragment(), OnClickMoviesListener, SearchView.OnQueryText
         viewLifecycleOwner.lifecycleScope.launch {
             searchViewModel.getMoviesLiveData.collect { movieState ->
                 when (movieState) {
-                    NetworkState.Loading -> {}
-                    is NetworkState.Success -> {
+                    UIState.Loading -> {}
+                    is UIState.Success -> {
                         movieState.data?.let { allMoviesAdapter.setAllMoviesList(it) }
                     }
-                    is NetworkState.Error -> {
+                    is UIState.Error -> {
                         Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -76,7 +76,7 @@ class SearchFragment : Fragment(), OnClickMoviesListener, SearchView.OnQueryText
         return false
     }
 
-    override fun onMoviesClicked(movie: DomainModel) {
+    override fun onMoviesClicked(movie: MoviesUIModel) {
         TODO("Not yet implemented")
     }
 }

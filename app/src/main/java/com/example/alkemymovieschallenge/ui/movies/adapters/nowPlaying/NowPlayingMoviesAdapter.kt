@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alkemymovieschallenge.R
-import com.example.alkemymovieschallenge.domain.model.DomainModel
+import com.example.alkemymovieschallenge.ui.model.MoviesUIModel
 import com.example.alkemymovieschallenge.ui.movies.adapters.OnClickMoviesListener
 
 class NowPlayingMoviesAdapter(
-    private var nowPlayingMoviesList: List<DomainModel>,
+    private var nowPlayingMoviesList: List<MoviesUIModel>,
     private var onClickMoviesListener: OnClickMoviesListener
 ) : RecyclerView.Adapter<NowPlayingMoviesViewHolder>() {
 
@@ -25,7 +25,7 @@ class NowPlayingMoviesAdapter(
 
     override fun getItemCount(): Int = nowPlayingMoviesList.size
 
-    fun setNowPlayingMoviesList(newMovieList: List<DomainModel>) {
+    fun setNowPlayingMoviesList(newMovieList: List<MoviesUIModel>) {
         nowPlayingMoviesList = newMovieList
         notifyDataSetChanged()
     }

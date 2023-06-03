@@ -13,8 +13,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.FragmentMoviesBinding
-import com.example.alkemymovieschallenge.domain.NetworkState
-import com.example.alkemymovieschallenge.domain.model.DomainModel
+import com.example.alkemymovieschallenge.ui.UIState
+import com.example.alkemymovieschallenge.ui.model.MoviesUIModel
 import com.example.alkemymovieschallenge.ui.movies.adapters.OnClickMoviesListener
 import com.example.alkemymovieschallenge.ui.movies.adapters.nowPlaying.NowPlayingMoviesAdapter
 import com.example.alkemymovieschallenge.ui.movies.adapters.popular.PopularMoviesAdapter
@@ -58,15 +58,16 @@ class MoviesFragment : Fragment(), OnClickMoviesListener {
         viewLifecycleOwner.lifecycleScope.launch {
             moviesViewModel.getMoviesLiveData.collect { movieState ->
                 when (movieState) {
-                    NetworkState.Loading -> binding.progressBar.isVisible = true
-                    is NetworkState.Success -> {
+                    UIState.Loading -> binding.progressBar.isVisible = true
+                    is UIState.Success -> {
                         binding.progressBar.isVisible = false
                         popularMoviesAdapter.setPopularMoviesList(movieState.data.popular)
                         topRatedMoviesAdapter.setTopRatedMoviesList(movieState.data.topRated)
                         upComingMoviesAdapter.setUpComingMoviesList(movieState.data.upComing)
                         nowPlayingMoviesAdapter.setNowPlayingMoviesList(movieState.data.nowPlaying)
                     }
-                    is NetworkState.Error ->{
+
+                    is UIState.Error -> {
                         binding.progressBar.isVisible = false
                         Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
                     }
@@ -75,7 +76,7 @@ class MoviesFragment : Fragment(), OnClickMoviesListener {
         }
     }
 
-    override fun onMoviesClicked(movie: DomainModel) {
+    override fun onMoviesClicked(movie: MoviesUIModel) {
         val movieBundle = Bundle()
         movieBundle.putParcelable("movie", movie)
         findNavController().navigate(R.id.movieDetailFragment, movieBundle)
