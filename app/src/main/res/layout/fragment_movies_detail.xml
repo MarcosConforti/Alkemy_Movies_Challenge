@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".ui.fragments.movies.MovieDetailFragment">
+    tools:context=".ui.detail.MovieDetailFragment">
 
     <ImageView
         android:id="@+id/iv_bigImage"

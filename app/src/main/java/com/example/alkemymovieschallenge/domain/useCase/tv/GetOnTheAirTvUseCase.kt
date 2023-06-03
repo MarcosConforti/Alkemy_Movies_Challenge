@@ -1,6 +1,6 @@
 package com.example.alkemymovieschallenge.domain.useCase.tv
 
-import com.example.alkemymovieschallenge.data.TvRepository
+import com.example.alkemymovieschallenge.data.repository.TvRepository
 import com.example.alkemymovieschallenge.domain.NetworkState
 import com.example.alkemymovieschallenge.domain.model.DomainTvModel
 import kotlinx.coroutines.flow.Flow

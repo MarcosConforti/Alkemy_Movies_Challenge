@@ -2,7 +2,7 @@ package com.example.alkemymovieschallenge.domain.model
 
 import android.os.Parcelable
 import com.example.alkemymovieschallenge.data.database.entities.MoviesEntities
-import com.example.alkemymovieschallenge.data.model.MoviesModel
+import com.example.alkemymovieschallenge.data.api.model.MoviesModel
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

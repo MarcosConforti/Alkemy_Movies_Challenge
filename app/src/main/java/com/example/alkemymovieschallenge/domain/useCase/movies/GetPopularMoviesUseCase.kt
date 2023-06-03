@@ -1,7 +1,6 @@
 package com.example.alkemymovieschallenge.domain.useCase.movies
 
-import com.example.alkemymovieschallenge.data.MoviesRepository
-import com.example.alkemymovieschallenge.data.database.entities.toMovieDataBase
+import com.example.alkemymovieschallenge.data.repository.MoviesRepository
 import com.example.alkemymovieschallenge.domain.NetworkState
 import com.example.alkemymovieschallenge.domain.model.DomainModel
 import kotlinx.coroutines.flow.Flow
