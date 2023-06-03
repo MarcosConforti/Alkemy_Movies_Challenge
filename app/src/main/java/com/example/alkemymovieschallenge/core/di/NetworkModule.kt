@@ -1,6 +1,6 @@
 package com.example.alkemymovieschallenge.core.di
 
-import com.example.alkemymovieschallenge.data.network.APIService
+import com.example.alkemymovieschallenge.data.api.APIService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

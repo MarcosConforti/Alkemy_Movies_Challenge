@@ -9,14 +9,14 @@ import com.example.alkemymovieschallenge.data.database.entities.FavoritesEntitie
 @Dao
 interface FavoritesDao {
 
-    @Insert
-    suspend fun insert(favorite: FavoritesEntities)
+    @Query("SELECT * FROM favorites_table")
+    suspend fun getFavorites():List<FavoritesEntities>
 
     @Query("SELECT id FROM favorites_table WHERE id = :id")
-    suspend fun checkFavorites(id: String):Int
+    suspend fun checkFavorites(id: String):Boolean
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFavorites(favorites:List<FavoritesEntities>)
+    suspend fun insertFavorites(favorites:FavoritesEntities)
 
     @Query("DELETE FROM favorites_table WHERE id = :id")
     suspend fun deleteFromFavorites(id: String):Int

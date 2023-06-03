@@ -3,7 +3,7 @@ package com.example.alkemymovieschallenge.data.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.alkemymovieschallenge.data.model.TvModel
+import com.example.alkemymovieschallenge.data.api.model.TvModel
 
 
 @Entity(tableName = "series_table")
