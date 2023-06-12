@@ -1,6 +1,5 @@
 package com.example.alkemymovieschallenge.ui.favorites
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.alkemymovieschallenge.domain.NetworkState
@@ -27,29 +26,31 @@ class FavoriteViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private val _favoritesUseCase =
+    private val _favoriteUIState =
         MutableStateFlow<UIState<List<FavoritesUIModel>>>(UIState.Loading)
 
-    val favoriteLiveData: StateFlow<UIState<List<FavoritesUIModel>>> = _favoritesUseCase
+    val favoriteUIState: StateFlow<UIState<List<FavoritesUIModel>>> = _favoriteUIState
 
-    val verifyLiveData = MutableLiveData<Boolean>()
+    val verifyState =
+        MutableStateFlow<UIState<Boolean>>(UIState.Loading)
 
     fun getFavorites() {
         viewModelScope.launch {
             getFavoriteUseCase().collect { favorite ->
-               when(favorite){
-                   NetworkState.Loading -> {}
-                   is NetworkState.Success -> {
-                       val getFavorite = favorite.data.map { it.toUIFavorites() }
-                       _favoritesUseCase.value = UIState.Success(getFavorite)
-                   }
-                   is NetworkState.Error ->{
-                       _favoritesUseCase.value = UIState.Error(Error())
-                   }
-               }
-            }
+                    when(favorite){
+                        NetworkState.Loading -> TODO()
+                        is NetworkState.Success ->{
+                            val getFavorite = favorite.data.map { it.toUIFavorites() }
+                            _favoriteUIState.value = UIState.Success(getFavorite)
+                        }
+                        is NetworkState.Error -> {
+                            _favoriteUIState.value = UIState.Error(Error())
+                        }
+                    }
+           }
         }
     }
+
 
     fun addToFavorites(favorite: FavoritesUIModel) {
         viewModelScope.launch {
@@ -63,23 +64,16 @@ class FavoriteViewModel @Inject constructor(
                     favorite.image
                 )
             )
+            getFavorites()
         }
     }
 
-    suspend fun removeFavorites(id: String) {
+    fun removeFavorites(title: String) {
         viewModelScope.launch {
-            removeToFavoriteUseCase.removeToFavorites(id)
+            removeToFavoriteUseCase.removeToFavorites(title)
         }
     }
 
-    private suspend fun isFavorite(id: String): Boolean =
-        isCheckedFavoriteUseCase.checkFavorites(id)
-
-    fun isChecked(title: String): Boolean {
-        viewModelScope.launch {
-            val isFavorite = isFavorite(title)
-            verifyLiveData.postValue(isFavorite)
-        }
-        return verifyLiveData.value ?: false
-    }
+    suspend fun isChecked(title: String): Boolean =
+        isCheckedFavoriteUseCase.checkFavorites(title)
 }

@@ -10,7 +10,4 @@ class GetAllMoviesUseCase @Inject constructor(private val moviesRepository: Movi
 
     suspend operator fun invoke(): Flow<NetworkState<List<DomainMoviesModel>>> =
         moviesRepository.getAllMoviesFromApi()
-
-
-
 }

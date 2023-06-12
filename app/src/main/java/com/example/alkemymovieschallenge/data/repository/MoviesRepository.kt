@@ -9,6 +9,7 @@ import com.example.alkemymovieschallenge.domain.model.DomainMoviesModel
 import com.example.alkemymovieschallenge.domain.model.toDomainMovie
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 //esta clase funciona para seleccionar de donde el programa tomara las peliculas, si de la api o db
@@ -16,7 +17,7 @@ class MoviesRepository @Inject constructor(
     private val api: APIService,
     private val moviesDao: MoviesDao
 ) {
-    suspend fun getPopularMoviesFromApi(): Flow<NetworkState<List<DomainMoviesModel>>> {
+    fun getPopularMoviesFromApi(): Flow<NetworkState<List<DomainMoviesModel>>> {
         return flow {   //recupero las peliculas
             try {
                 var moviesApi = api.getPopularMovies().results
@@ -27,7 +28,9 @@ class MoviesRepository @Inject constructor(
                 } else {
                     //si esta vacio, que recupere los datos de la db
                     val moviesDb = getMoviesFromDataBase()
-                    emit(NetworkState.Success(moviesDb))
+                   moviesDb.collect { dbMovies ->
+                       emit(NetworkState.Success(dbMovies))
+                   }
                 }
 
             } catch (e: Throwable) {
@@ -36,7 +39,7 @@ class MoviesRepository @Inject constructor(
         }
     }
 
-    suspend fun getTopRatedMoviesFromApi(): Flow<NetworkState<List<DomainMoviesModel>>> {
+     fun getTopRatedMoviesFromApi(): Flow<NetworkState<List<DomainMoviesModel>>> {
         return flow {
             try {
                 var moviesApi = api.getTopRatedtMovies().results
@@ -48,7 +51,9 @@ class MoviesRepository @Inject constructor(
                 } else {
                     //si esta vacio, que recupere los datos de la db
                     val moviesDb = getMoviesFromDataBase()
-                    emit(NetworkState.Success(moviesDb))
+                    moviesDb.collect { dbMovies ->
+                        emit(NetworkState.Success(dbMovies))
+                    }
                 }
 
             } catch (e: Throwable) {
@@ -57,7 +62,7 @@ class MoviesRepository @Inject constructor(
         }
     }
 
-    suspend fun getUpComingMoviesFromApi(): Flow<NetworkState<List<DomainMoviesModel>>> {
+     fun getUpComingMoviesFromApi(): Flow<NetworkState<List<DomainMoviesModel>>> {
         return flow {
             try {
                 var moviesApi = api.getUpComingMovies().results
@@ -69,7 +74,9 @@ class MoviesRepository @Inject constructor(
                 } else {
                     //si esta vacio, que recupere los datos de la db
                     val moviesDb = getMoviesFromDataBase()
-                    emit(NetworkState.Success(moviesDb))
+                    moviesDb.collect { dbMovies ->
+                        emit(NetworkState.Success(dbMovies))
+                    }
                 }
 
             } catch (e: Throwable) {
@@ -78,7 +85,7 @@ class MoviesRepository @Inject constructor(
         }
     }
 
-    suspend fun getNowPlayingMoviesFromApi(): Flow<NetworkState<List<DomainMoviesModel>>> {
+     fun getNowPlayingMoviesFromApi(): Flow<NetworkState<List<DomainMoviesModel>>> {
         return flow {
             try {
                 var moviesApi = api.getNowPlayingMovies().results
@@ -90,7 +97,9 @@ class MoviesRepository @Inject constructor(
                 } else {
                     //si esta vacio, que recupere los datos de la db
                     val moviesDb = getMoviesFromDataBase()
-                    emit(NetworkState.Success(moviesDb))
+                    moviesDb.collect { dbMovies ->
+                        emit(NetworkState.Success(dbMovies))
+                    }
                 }
 
             } catch (e: Throwable) {
@@ -99,7 +108,7 @@ class MoviesRepository @Inject constructor(
         }
     }
 
-    suspend fun getAllMoviesFromApi(): Flow<NetworkState<List<DomainMoviesModel>>> {
+     fun getAllMoviesFromApi(): Flow<NetworkState<List<DomainMoviesModel>>> {
         return flow {
             try {
                 var moviesApi = api.getAllMovies().results
@@ -111,7 +120,9 @@ class MoviesRepository @Inject constructor(
                 } else {
                     //si esta vacio, que recupere los datos de la db
                     val moviesDb = getMoviesFromDataBase()
-                    emit(NetworkState.Success(moviesDb))
+                    moviesDb.collect { dbMovies ->
+                        emit(NetworkState.Success(dbMovies))
+                    }
                 }
 
             } catch (e: Throwable) {
@@ -120,9 +131,11 @@ class MoviesRepository @Inject constructor(
         }
     }
 
-    suspend fun getMoviesFromDataBase(): List<DomainMoviesModel> {
-        val response = moviesDao.getAllMovies()
-        return response.map { it.toDomainMovie() }
+     fun getMoviesFromDataBase(): Flow<List<DomainMoviesModel>> {
+        return moviesDao.getAllMovies(). map {
+            response ->
+            response.map { it.toDomainMovie() }
+        }
     }
 
     suspend fun insertMovies(movies: List<MoviesEntities>) {

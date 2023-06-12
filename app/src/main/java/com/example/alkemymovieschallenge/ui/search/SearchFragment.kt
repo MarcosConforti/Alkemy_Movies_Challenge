@@ -6,12 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.airbnb.lottie.LottieAnimationView
+import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.FragmentSearchBinding
 import com.example.alkemymovieschallenge.ui.UIState
+import com.example.alkemymovieschallenge.ui.model.FavoritesUIModel
 import com.example.alkemymovieschallenge.ui.model.MoviesUIModel
 import com.example.alkemymovieschallenge.ui.movies.adapters.OnClickMoviesListener
 import com.example.alkemymovieschallenge.ui.search.adapters.movies.AllMoviesAdapter
@@ -30,7 +35,7 @@ class SearchFragment : Fragment(), OnClickMoviesListener, SearchView.OnQueryText
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
 
         binding.searchView.setOnQueryTextListener(this)
@@ -40,9 +45,16 @@ class SearchFragment : Fragment(), OnClickMoviesListener, SearchView.OnQueryText
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        configAnim()
         configRecycler()
         configObservers()
+    }
+
+    private fun configAnim() {
+        val animationView: LottieAnimationView = binding.lottieAnimationView
+        animationView.setAnimation("progressMovie.json")
+        animationView.playAnimation()
+
     }
 
     private fun configRecycler() {
@@ -55,11 +67,19 @@ class SearchFragment : Fragment(), OnClickMoviesListener, SearchView.OnQueryText
         viewLifecycleOwner.lifecycleScope.launch {
             searchViewModel.getMoviesLiveData.collect { movieState ->
                 when (movieState) {
-                    UIState.Loading -> {}
-                    is UIState.Success -> {
-                        movieState.data?.let { allMoviesAdapter.setAllMoviesList(it) }
+                    UIState.Loading -> {
+                        binding.lottieAnimationView.isVisible = true
+                        binding.scrollView.isVisible = false
                     }
+
+                    is UIState.Success -> {
+                        binding.lottieAnimationView.isVisible = false
+                        binding.scrollView.isVisible = true
+                        movieState.data.let { allMoviesAdapter.setAllMoviesList(it) }
+                    }
+
                     is UIState.Error -> {
+                        binding.lottieAnimationView.isVisible = false
                         Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -77,6 +97,17 @@ class SearchFragment : Fragment(), OnClickMoviesListener, SearchView.OnQueryText
     }
 
     override fun onMoviesClicked(movie: MoviesUIModel) {
-        TODO("Not yet implemented")
+        val bundle = Bundle().apply {
+            putParcelable(
+                "movie", FavoritesUIModel(
+                    title = movie.title,
+                    overview = movie.overview,
+                    releaseDate = movie.releaseDate,
+                    voteAverage = movie.voteAverage,
+                    image = movie.image
+                )
+            )
+        }
+        findNavController().navigate(R.id.movieDetailFragment, bundle)
     }
 }

@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class GetNowPlayingMoviesUseCase @Inject constructor(private val moviesRepository: MoviesRepository) {
 
-    suspend operator fun invoke(): Flow<NetworkState<List<DomainMoviesModel>>> =
+    operator fun invoke(): Flow<NetworkState<List<DomainMoviesModel>>> =
         moviesRepository.getNowPlayingMoviesFromApi()
 
 

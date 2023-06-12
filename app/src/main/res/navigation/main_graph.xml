@@ -32,7 +32,11 @@
         android:id="@+id/movieDetailFragment"
         android:name="com.example.alkemymovieschallenge.ui.detail.MovieDetailFragment"
         android:label="fragment_movies_detail"
-        tools:layout="@layout/fragment_movies_detail" />
+        tools:layout="@layout/fragment_movies_detail" >
+        <action
+            android:id="@+id/action_movieDetailFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/seriesDetailFragment"
         android:name="com.example.alkemymovieschallenge.ui.detail.SeriesDetailFragment"

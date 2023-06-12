@@ -11,9 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.airbnb.lottie.LottieAnimationView
 import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.FragmentMoviesBinding
 import com.example.alkemymovieschallenge.ui.UIState
+import com.example.alkemymovieschallenge.ui.model.FavoritesUIModel
 import com.example.alkemymovieschallenge.ui.model.MoviesUIModel
 import com.example.alkemymovieschallenge.ui.movies.adapters.OnClickMoviesListener
 import com.example.alkemymovieschallenge.ui.movies.adapters.nowPlaying.NowPlayingMoviesAdapter
@@ -49,8 +51,15 @@ class MoviesFragment : Fragment(), OnClickMoviesListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        configAnim()
         configRecycler()
         configObservers()
+
+    }
+    private fun configAnim(){
+        val animationView: LottieAnimationView = binding.lottieAnimationView
+        animationView.setAnimation("progressMovie.json")
+        animationView.playAnimation()
 
     }
 
@@ -58,9 +67,13 @@ class MoviesFragment : Fragment(), OnClickMoviesListener {
         viewLifecycleOwner.lifecycleScope.launch {
             moviesViewModel.getMoviesLiveData.collect { movieState ->
                 when (movieState) {
-                    UIState.Loading -> binding.progressBar.isVisible = true
+                    UIState.Loading -> {
+                        binding.lottieAnimationView.isVisible = true
+                        binding.scrollView.isVisible = false
+                    }
                     is UIState.Success -> {
-                        binding.progressBar.isVisible = false
+                        binding.scrollView.isVisible = true
+                        binding.lottieAnimationView.isVisible = false
                         popularMoviesAdapter.setPopularMoviesList(movieState.data.popular)
                         topRatedMoviesAdapter.setTopRatedMoviesList(movieState.data.topRated)
                         upComingMoviesAdapter.setUpComingMoviesList(movieState.data.upComing)
@@ -68,7 +81,7 @@ class MoviesFragment : Fragment(), OnClickMoviesListener {
                     }
 
                     is UIState.Error -> {
-                        binding.progressBar.isVisible = false
+                        binding.lottieAnimationView.isVisible = false
                         Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -77,9 +90,16 @@ class MoviesFragment : Fragment(), OnClickMoviesListener {
     }
 
     override fun onMoviesClicked(movie: MoviesUIModel) {
-        val movieBundle = Bundle()
-        movieBundle.putParcelable("movie", movie)
-        findNavController().navigate(R.id.movieDetailFragment, movieBundle)
+        val bundle = Bundle().apply {
+            putParcelable("movie", FavoritesUIModel(
+                title = movie.title,
+                overview = movie.overview,
+                releaseDate = movie.releaseDate,
+                voteAverage = movie.voteAverage,
+                image = movie.image)
+            )
+        }
+        findNavController().navigate(R.id.movieDetailFragment, bundle)
     }
 
     private fun configRecycler() {
