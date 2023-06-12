@@ -5,7 +5,7 @@ This is a simple Movie/Series catalog written in Kotlin using a modern Android A
 # Technology stack
 
 - IDE: Android Studio
-- Architecture: Clean Architecture + MVVM & LiveData
+- Architecture: Clean Architecture + MVVM & Flows
 - API: [TheMovieDataBase](https://www.themoviedb.org/)
 - Programming Language: Kotlin
 - Third Party Libraries: Room, Retrofit,Dagger Hilt,Picasso, Gson, Navigation Component,Mockk
@@ -13,8 +13,10 @@ This is a simple Movie/Series catalog written in Kotlin using a modern Android A
 # About Project
 
 - Presentation Activity
-- Activity Main + Fragments(Movies,Series,Favorites)
-- Details Fragments (Movies, Series)
+- Activity Main + Fragments
+- Detail Fragment
+- Search Fragment
+- Favorite Fragment
 - Local Cache
 - Unitary Test
 

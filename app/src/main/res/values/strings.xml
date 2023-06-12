@@ -24,8 +24,7 @@
     <string name="onTheAir">TV On The Air:</string>
 
     <!-- Favorites Fragment. -->
-    <string name="favoriteMovies">Favorite Movies:</string>
-    <string name="favoriteSeries">Favorite Series:</string>
+    <string name="favoriteMovies">Favorites:</string>
 
     <!-- Detail Fragment. -->
     <string name="title">Title</string>

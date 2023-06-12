@@ -5,5 +5,5 @@ import javax.inject.Inject
 
 class RemoveToFavoriteUseCase @Inject constructor(private val repository: FavoritesRepository){
 
-    suspend fun removeToFavorites(id: String) = repository.cleanList(id)
+    suspend fun removeToFavorites(title: String) = repository.cleanList(title)
 }

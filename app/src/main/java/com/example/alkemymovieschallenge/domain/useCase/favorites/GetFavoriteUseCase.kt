@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class GetFavoriteUseCase @Inject constructor(private val repository: FavoritesRepository) {
 
-    suspend operator fun invoke(): Flow<NetworkState<List<DomainFavoritesModel>>> =
-        flow {repository.getFavorites()}
+    operator fun invoke(): Flow<NetworkState<List<DomainFavoritesModel>>> =
+        repository.getFavorites()
 
 }

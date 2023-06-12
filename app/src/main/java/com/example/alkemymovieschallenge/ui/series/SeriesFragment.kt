@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.airbnb.lottie.LottieAnimationView
 import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.FragmentSeriesBinding
 import com.example.alkemymovieschallenge.domain.NetworkState
@@ -52,24 +53,36 @@ class SeriesFragment : Fragment(), OnClickTvListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        configAnim()
         configRecycler()
         configObservers()
+    }
+
+    private fun configAnim(){
+        val animationView: LottieAnimationView = binding.lottieAnimationView
+        animationView.setAnimation("progressMovie.json")
+        animationView.playAnimation()
+
     }
 
     private fun configObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             seriesViewModel.getSeriesLiveData.collect { seriesState ->
                 when (seriesState) {
-                    NetworkState.Loading -> binding.progressBar.isVisible = true
+                    NetworkState.Loading -> {
+                        binding.lottieAnimationView.isVisible = true
+                        binding.scrollView.isVisible = false
+                    }
                     is NetworkState.Success -> {
-                        binding.progressBar.isVisible = false
+                        binding.lottieAnimationView.isVisible = false
+                        binding.scrollView.isVisible = true
                         popularTvAdapter.setPopularTvList(seriesState.data.popularTv)
                         onTheAirTvAdapter.setOnTheAirTvList(seriesState.data.onTheAir)
                         airingTodayTvAdapter.setAiringTodayTvList(seriesState.data.airingToday)
                         topRatedTvAdapter.setTopRatedTvList(seriesState.data.topRated)
                     }
                     is NetworkState.Error -> {
-                        binding.progressBar.isVisible = false
+                        binding.lottieAnimationView.isVisible = false
                         Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
                     }
                 }

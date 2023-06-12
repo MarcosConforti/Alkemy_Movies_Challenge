@@ -14,7 +14,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(private val getAllMoviesUseCase: GetAllMoviesUseCase) :
+class SearchViewModel @Inject constructor(
+    private val getAllMoviesUseCase: GetAllMoviesUseCase) :
     ViewModel() {
 
     private val _getMoviesLiveData =
@@ -35,7 +36,6 @@ class SearchViewModel @Inject constructor(private val getAllMoviesUseCase: GetAl
                         _getMoviesLiveData.value =
                             UIState.Success(movieList)
                     }
-
                     is NetworkState.Error -> {
                         _getMoviesLiveData.value = UIState.Error(Error())
                     }
