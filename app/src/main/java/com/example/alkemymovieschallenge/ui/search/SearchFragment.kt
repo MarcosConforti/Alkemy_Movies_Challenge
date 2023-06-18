@@ -16,8 +16,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.FragmentSearchBinding
 import com.example.alkemymovieschallenge.ui.UIState
-import com.example.alkemymovieschallenge.ui.model.FavoritesUIModel
-import com.example.alkemymovieschallenge.ui.model.MoviesUIModel
+import com.example.alkemymovieschallenge.ui.model.UIModel
 import com.example.alkemymovieschallenge.ui.movies.adapters.OnClickMoviesListener
 import com.example.alkemymovieschallenge.ui.search.adapters.movies.AllMoviesAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -65,19 +64,17 @@ class SearchFragment : Fragment(), OnClickMoviesListener, SearchView.OnQueryText
 
     private fun configObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
-            searchViewModel.getMoviesLiveData.collect { movieState ->
+            searchViewModel.getAllMoviesState.collect { movieState ->
                 when (movieState) {
                     UIState.Loading -> {
                         binding.lottieAnimationView.isVisible = true
                         binding.scrollView.isVisible = false
                     }
-
                     is UIState.Success -> {
                         binding.lottieAnimationView.isVisible = false
                         binding.scrollView.isVisible = true
                         movieState.data.let { allMoviesAdapter.setAllMoviesList(it) }
                     }
-
                     is UIState.Error -> {
                         binding.lottieAnimationView.isVisible = false
                         Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
@@ -96,18 +93,11 @@ class SearchFragment : Fragment(), OnClickMoviesListener, SearchView.OnQueryText
         return false
     }
 
-    override fun onMoviesClicked(movie: MoviesUIModel) {
+    override fun onMoviesClicked(data: UIModel) {
         val bundle = Bundle().apply {
             putParcelable(
-                "movie", FavoritesUIModel(
-                    title = movie.title,
-                    overview = movie.overview,
-                    releaseDate = movie.releaseDate,
-                    voteAverage = movie.voteAverage,
-                    image = movie.image
-                )
-            )
+                "data",data)
         }
-        findNavController().navigate(R.id.movieDetailFragment, bundle)
+        findNavController().navigate(R.id.detailFragment, bundle)
     }
 }

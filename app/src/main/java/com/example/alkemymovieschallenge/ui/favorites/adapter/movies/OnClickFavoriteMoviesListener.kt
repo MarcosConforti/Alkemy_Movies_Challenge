@@ -1,8 +1,8 @@
 package com.example.alkemymovieschallenge.ui.favorites.adapter.movies
 
-import com.example.alkemymovieschallenge.ui.model.FavoritesUIModel
+import com.example.alkemymovieschallenge.ui.model.UIModel
 
 interface OnClickFavoriteMoviesListener {
 
-    fun onMoviesClicked(favorite: FavoritesUIModel)
+    fun onMoviesClicked(favorite: UIModel)
 }

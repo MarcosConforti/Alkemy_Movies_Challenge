@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class TvModel(
+data class SeriesModel(
     @SerializedName("id") val id: String,
     @SerializedName("name") val title: String,
     @SerializedName("first_air_date") val releaseDate: String,

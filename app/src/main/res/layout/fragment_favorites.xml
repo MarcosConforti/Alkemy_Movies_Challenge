@@ -44,11 +44,6 @@
                 android:id="@+id/rv_favoriteMovies"
                 style="@style/recyclerViewStyle"/>
 
-            <TextView
-                android:id="@+id/tv_cosa"
-                style="@style/textStyle"
-                android:hint="@string/favoriteMovies"/>
-
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

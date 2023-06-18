@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alkemymovieschallenge.R
-import com.example.alkemymovieschallenge.ui.model.MoviesUIModel
+import com.example.alkemymovieschallenge.ui.model.UIModel
 import com.example.alkemymovieschallenge.ui.movies.adapters.OnClickMoviesListener
 
 class TopRatedMoviesAdapter(
-    private var topRatedMoviesList: List<MoviesUIModel>,
+    private var topRatedMoviesList: List<UIModel>,
     private var onClickMoviesListener: OnClickMoviesListener
 ) : RecyclerView.Adapter<TopRatedMoviesViewHolder>() {
 
@@ -25,7 +25,7 @@ class TopRatedMoviesAdapter(
 
     override fun getItemCount(): Int = topRatedMoviesList.size
 
-    fun setTopRatedMoviesList(newMovieList: List<MoviesUIModel>) {
+    fun setTopRatedMoviesList(newMovieList: List<UIModel>) {
         topRatedMoviesList = newMovieList
         notifyDataSetChanged()
     }

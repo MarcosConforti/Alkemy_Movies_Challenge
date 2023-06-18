@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.alkemymovieschallenge.data.api.model.MoviesModel
 
-
 @Entity(tableName = "movies_table")
 data class MoviesEntities(
     @PrimaryKey(autoGenerate = true)

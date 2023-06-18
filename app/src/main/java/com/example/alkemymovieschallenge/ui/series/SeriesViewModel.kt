@@ -3,13 +3,18 @@ package com.example.alkemymovieschallenge.ui.series
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.alkemymovieschallenge.domain.NetworkState
+import com.example.alkemymovieschallenge.domain.useCase.series.GetAiringTodayTvUseCase
+import com.example.alkemymovieschallenge.domain.useCase.series.GetOnTheAirTvUseCase
+import com.example.alkemymovieschallenge.domain.useCase.series.GetPopularTvUseCase
+import com.example.alkemymovieschallenge.domain.useCase.series.GetTopRatedTvUseCase
+import com.example.alkemymovieschallenge.ui.UIState
+import com.example.alkemymovieschallenge.ui.model.toUIModel
 import com.example.alkemymovieschallenge.ui.model.uiList.SeriesUIList
-import com.example.alkemymovieschallenge.domain.useCase.tv.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,9 +27,10 @@ class SeriesViewModel @Inject constructor(
 ):
  ViewModel() {
 
-    private val _getSeriesLiveData = MutableStateFlow<NetworkState<SeriesUIList>>(NetworkState.Loading)
+    private val _getSeriesUIState =
+        MutableStateFlow<UIState<SeriesUIList>>(UIState.Loading)
 
-    val getSeriesLiveData: StateFlow<NetworkState<SeriesUIList>> = _getSeriesLiveData
+    val getSeriesUIState: StateFlow<UIState<SeriesUIList>> = _getSeriesUIState
 
     init {
         callSeriesUseCase()
@@ -46,16 +52,16 @@ class SeriesViewModel @Inject constructor(
                     topRated is NetworkState.Success &&
                     airingToday is NetworkState.Success
                 ) {
-                    _getSeriesLiveData.value = NetworkState.Success(
+                    _getSeriesUIState.value = UIState.Success(
                         SeriesUIList(
-                            popularTv = popular.data,
-                            onTheAir = onTheAir.data,
-                            topRated = topRated.data,
-                            airingToday = airingToday.data
+                            popularTv = popular.data.map { it.toUIModel() },
+                            onTheAir = onTheAir.data.map { it.toUIModel() },
+                            topRated = topRated.data.map { it.toUIModel() },
+                            airingToday = airingToday.data.map { it.toUIModel() }
                         )
                     )
                 }else{
-                    _getSeriesLiveData.value = NetworkState.Error(Error())
+                    _getSeriesUIState.value = UIState.Error(Error())
                 }
             }.collect()
         }

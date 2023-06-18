@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alkemymovieschallenge.R
-import com.example.alkemymovieschallenge.domain.model.DomainTvModel
-import com.example.alkemymovieschallenge.ui.series.adapters.OnClickTvListener
+import com.example.alkemymovieschallenge.ui.model.UIModel
+import com.example.alkemymovieschallenge.ui.series.adapters.OnClickSeriesListener
 
 class TopRatedTvAdapter(
-    private var topRatedTvList: List<DomainTvModel>,
-    private var onClickTvListener: OnClickTvListener
+    private var topRatedTvList: List<UIModel>,
+    private var onClickSeriesListener: OnClickSeriesListener
 ) : RecyclerView.Adapter<TopRatedTvViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopRatedTvViewHolder {
@@ -20,12 +20,12 @@ class TopRatedTvAdapter(
     override fun onBindViewHolder(holder: TopRatedTvViewHolder, position: Int) {
         val item = topRatedTvList[position]
         holder.render(item)
-        holder.itemView.setOnClickListener { onClickTvListener?.onTvClicked(item) }
+        holder.itemView.setOnClickListener { onClickSeriesListener?.onSeriesClicked(item) }
     }
 
     override fun getItemCount(): Int = topRatedTvList.size
 
-    fun setTopRatedTvList(newTvList: List<DomainTvModel>) {
+    fun setTopRatedTvList(newTvList: List<UIModel>) {
         topRatedTvList = newTvList
         notifyDataSetChanged()
     }

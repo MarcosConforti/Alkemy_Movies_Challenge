@@ -1,12 +1,10 @@
 package com.example.alkemymovieschallenge.ui.model.uiList
 
-import com.example.alkemymovieschallenge.domain.model.DomainTvModel
+import com.example.alkemymovieschallenge.ui.model.UIModel
 
 data class SeriesUIList(
-     val popularTv:List<DomainTvModel>,
-     val airingToday:List<DomainTvModel>,
-     val onTheAir:List<DomainTvModel>,
-     val topRated:List<DomainTvModel>,
-    // val allSeries:List<DomainTvModel>
-
+     val popularTv:List<UIModel>,
+     val airingToday:List<UIModel>,
+     val onTheAir:List<UIModel>,
+     val topRated:List<UIModel>,
      )

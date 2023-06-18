@@ -4,20 +4,20 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.alkemymovieschallenge.data.database.entities.TvEntities
+import com.example.alkemymovieschallenge.data.database.entities.SeriesEntities
 
 @Dao
-interface TvDao {
+interface SeriesDao {
 
     @Query("SELECT * FROM series_table")
-    suspend fun getAllSeries():List<TvEntities>
+    suspend fun getAllSeries():List<SeriesEntities>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(series:List<TvEntities>)
+    suspend fun insertAll(series:List<SeriesEntities>)
 
     //insertar una serie
     @Insert
-    suspend fun insert(serie: TvEntities)
+    suspend fun insert(serie: SeriesEntities)
 
     @Query("DELETE FROM series_table")
     suspend fun deleteAllSeries()
