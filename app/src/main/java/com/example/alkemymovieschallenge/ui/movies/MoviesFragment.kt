@@ -15,8 +15,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.FragmentMoviesBinding
 import com.example.alkemymovieschallenge.ui.UIState
-import com.example.alkemymovieschallenge.ui.model.FavoritesUIModel
-import com.example.alkemymovieschallenge.ui.model.MoviesUIModel
+import com.example.alkemymovieschallenge.ui.model.UIModel
 import com.example.alkemymovieschallenge.ui.movies.adapters.OnClickMoviesListener
 import com.example.alkemymovieschallenge.ui.movies.adapters.nowPlaying.NowPlayingMoviesAdapter
 import com.example.alkemymovieschallenge.ui.movies.adapters.popular.PopularMoviesAdapter
@@ -89,17 +88,11 @@ class MoviesFragment : Fragment(), OnClickMoviesListener {
         }
     }
 
-    override fun onMoviesClicked(movie: MoviesUIModel) {
+    override fun onMoviesClicked(data: UIModel) {
         val bundle = Bundle().apply {
-            putParcelable("movie", FavoritesUIModel(
-                title = movie.title,
-                overview = movie.overview,
-                releaseDate = movie.releaseDate,
-                voteAverage = movie.voteAverage,
-                image = movie.image)
-            )
+            putParcelable("data", data)
         }
-        findNavController().navigate(R.id.movieDetailFragment, bundle)
+        findNavController().navigate(R.id.detailFragment, bundle)
     }
 
     private fun configRecycler() {

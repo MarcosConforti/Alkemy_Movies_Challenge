@@ -9,19 +9,19 @@
         android:id="@+id/moviesFragment"
         android:name="com.example.alkemymovieschallenge.ui.movies.MoviesFragment"
         android:label="fragment_movies"
-        tools:layout="@layout/fragment_movies" >
+        tools:layout="@layout/fragment_movies">
         <action
             android:id="@+id/action_moviesFragment_to_movieDetailFragment"
-            app:destination="@id/movieDetailFragment" />
+            app:destination="@id/detailFragment" />
     </fragment>
     <fragment
         android:id="@+id/seriesFragment"
         android:name="com.example.alkemymovieschallenge.ui.series.SeriesFragment"
         android:label="fragment_series"
-        tools:layout="@layout/fragment_series" >
+        tools:layout="@layout/fragment_series">
         <action
             android:id="@+id/action_seriesFragment_to_seriesDetailFragment"
-            app:destination="@id/seriesDetailFragment" />
+            app:destination="@id/detailFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
@@ -29,22 +29,21 @@
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" />
     <fragment
-        android:id="@+id/movieDetailFragment"
-        android:name="com.example.alkemymovieschallenge.ui.detail.MovieDetailFragment"
+        android:id="@+id/detailFragment"
+        android:name="com.example.alkemymovieschallenge.ui.detail.DetailFragment"
         android:label="fragment_movies_detail"
-        tools:layout="@layout/fragment_movies_detail" >
+        tools:layout="@layout/fragment_detail">
         <action
             android:id="@+id/action_movieDetailFragment_to_favoritesFragment"
             app:destination="@id/favoritesFragment" />
     </fragment>
     <fragment
-        android:id="@+id/seriesDetailFragment"
-        android:name="com.example.alkemymovieschallenge.ui.detail.SeriesDetailFragment"
-        android:label="fragment_series_detail"
-        tools:layout="@layout/fragment_series_detail" />
-    <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.alkemymovieschallenge.ui.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
 </navigation>

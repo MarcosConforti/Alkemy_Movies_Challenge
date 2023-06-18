@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alkemymovieschallenge.R
-import com.example.alkemymovieschallenge.ui.model.FavoritesUIModel
+import com.example.alkemymovieschallenge.ui.model.UIModel
 
 class FavoriteMoviesAdapter(
-    private var favoriteList: List<FavoritesUIModel>,
+    private var favoriteList: List<UIModel>,
 ) : RecyclerView.Adapter<FavoritesMoviesViewHolder>() {
 
     //var filteredFavoriteMoviesList: List<FavoritesUIModel> = favoriteList
@@ -29,7 +29,7 @@ class FavoriteMoviesAdapter(
 
     override fun getItemCount(): Int = favoriteList.size
 
-     fun setFavoriteList(favorite: List<FavoritesUIModel>) {
+     fun setFavoriteList(favorite: List<UIModel>) {
         favoriteList = favorite
         notifyDataSetChanged()
     }

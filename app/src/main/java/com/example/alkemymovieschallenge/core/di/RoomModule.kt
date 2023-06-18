@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.alkemymovieschallenge.data.database.FavoritesDataBase
 import com.example.alkemymovieschallenge.data.database.MoviesDataBase
-import com.example.alkemymovieschallenge.data.database.TvDataBase
+import com.example.alkemymovieschallenge.data.database.SeriesDataBase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,14 +35,14 @@ object RoomModule {
 
     @Singleton
     @Provides
-    fun provideTvRoom(@ApplicationContext context: Context): TvDataBase {
+    fun provideTvRoom(@ApplicationContext context: Context): SeriesDataBase {
 
-        return Room.databaseBuilder(context, TvDataBase::class.java, SERIES_DATABASE_NAME).build()
+        return Room.databaseBuilder(context, SeriesDataBase::class.java, SERIES_DATABASE_NAME).build()
     }
 
     @Singleton
     @Provides
-    fun provideTvDao(db: TvDataBase) = db.getTvDao()
+    fun provideTvDao(db: SeriesDataBase) = db.getSeriesDao()
 
     @Singleton
     @Provides

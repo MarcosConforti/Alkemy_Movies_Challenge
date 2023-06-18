@@ -1,8 +1,9 @@
 package com.example.alkemymovieschallenge.domain.useCase.tv
 
-import com.example.alkemymovieschallenge.data.repository.TvRepository
+import com.example.alkemymovieschallenge.data.repository.SeriesRepository
 import com.example.alkemymovieschallenge.domain.NetworkState
 import com.example.alkemymovieschallenge.domain.model.DomainTvModel
+import com.example.alkemymovieschallenge.domain.useCase.series.GetAiringTodayTvUseCase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -13,7 +14,7 @@ import org.junit.Test
 
 class GetAiringTodayTvUseCaseTest{
     @RelaxedMockK
-    private lateinit var repository: TvRepository
+    private lateinit var repository: SeriesRepository
 
     lateinit var getAiringTodayTvUseCase: GetAiringTodayTvUseCase
 

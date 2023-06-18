@@ -6,16 +6,15 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alkemymovieschallenge.R
-import com.example.alkemymovieschallenge.ui.favorites.adapter.movies.FavoritesMoviesViewHolder
-import com.example.alkemymovieschallenge.ui.model.MoviesUIModel
+import com.example.alkemymovieschallenge.ui.model.UIModel
 import com.example.alkemymovieschallenge.ui.movies.adapters.OnClickMoviesListener
 
 class AllMoviesAdapter(
-    private var allMoviesList: List<MoviesUIModel>,
+    private var allMoviesList: List<UIModel>,
     private var onClickMoviesListener: OnClickMoviesListener
 ) : RecyclerView.Adapter<AllMoviesViewHolder>(), Filterable {
 
-    var filteredAllMoviesList: List<MoviesUIModel> = emptyList()
+    var filteredAllMoviesList: List<UIModel> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllMoviesViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -30,7 +29,7 @@ class AllMoviesAdapter(
 
     override fun getItemCount(): Int = filteredAllMoviesList.size
 
-    fun setAllMoviesList(newMovieList: List<MoviesUIModel>) {
+    fun setAllMoviesList(newMovieList: List<UIModel>) {
         allMoviesList = newMovieList
         filteredAllMoviesList = newMovieList
         notifyDataSetChanged()
@@ -51,7 +50,7 @@ class AllMoviesAdapter(
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 @Suppress("UNCHECKED_CAST")
-                filteredAllMoviesList = results?.values as List<MoviesUIModel>?
+                filteredAllMoviesList = results?.values as List<UIModel>?
                     ?: emptyList()
                 notifyDataSetChanged()
             }

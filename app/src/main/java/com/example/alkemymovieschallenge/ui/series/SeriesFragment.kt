@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieAnimationView
 import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.FragmentSeriesBinding
-import com.example.alkemymovieschallenge.domain.NetworkState
-import com.example.alkemymovieschallenge.domain.model.DomainTvModel
-import com.example.alkemymovieschallenge.ui.series.adapters.OnClickTvListener
+import com.example.alkemymovieschallenge.ui.UIState
+import com.example.alkemymovieschallenge.ui.model.UIModel
+import com.example.alkemymovieschallenge.ui.series.adapters.OnClickSeriesListener
 import com.example.alkemymovieschallenge.ui.series.adapters.airing.AiringTodayTvAdapter
 import com.example.alkemymovieschallenge.ui.series.adapters.onTheAir.OnTheAirTvAdapter
 import com.example.alkemymovieschallenge.ui.series.adapters.popular.PopularTvAdapter
@@ -25,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SeriesFragment : Fragment(), OnClickTvListener {
+class SeriesFragment : Fragment(), OnClickSeriesListener {
 
     private var _binding: FragmentSeriesBinding? = null
     private val binding get() = _binding!!
@@ -37,14 +37,10 @@ class SeriesFragment : Fragment(), OnClickTvListener {
 
     private val seriesViewModel: SeriesViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSeriesBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -67,13 +63,13 @@ class SeriesFragment : Fragment(), OnClickTvListener {
 
     private fun configObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
-            seriesViewModel.getSeriesLiveData.collect { seriesState ->
+            seriesViewModel.getSeriesUIState.collect { seriesState ->
                 when (seriesState) {
-                    NetworkState.Loading -> {
+                    UIState.Loading -> {
                         binding.lottieAnimationView.isVisible = true
                         binding.scrollView.isVisible = false
                     }
-                    is NetworkState.Success -> {
+                    is UIState.Success -> {
                         binding.lottieAnimationView.isVisible = false
                         binding.scrollView.isVisible = true
                         popularTvAdapter.setPopularTvList(seriesState.data.popularTv)
@@ -81,18 +77,13 @@ class SeriesFragment : Fragment(), OnClickTvListener {
                         airingTodayTvAdapter.setAiringTodayTvList(seriesState.data.airingToday)
                         topRatedTvAdapter.setTopRatedTvList(seriesState.data.topRated)
                     }
-                    is NetworkState.Error -> {
+                    is UIState.Error -> {
                         binding.lottieAnimationView.isVisible = false
                         Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         }
-    }
-    override fun onTvClicked(series: DomainTvModel) {
-        val seriesBundle = Bundle()
-        seriesBundle.putParcelable("series", series)
-        findNavController().navigate(R.id.seriesDetailFragment, seriesBundle)
     }
 
     private fun configRecycler() {
@@ -128,5 +119,12 @@ class SeriesFragment : Fragment(), OnClickTvListener {
                 false
             )
         }
+    }
+
+    override fun onSeriesClicked(data: UIModel) {
+        val bundle = Bundle().apply {
+            putParcelable("data",data)
+        }
+        findNavController().navigate(R.id.detailFragment, bundle)
     }
 }

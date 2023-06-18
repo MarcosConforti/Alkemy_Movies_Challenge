@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alkemymovieschallenge.R
-import com.example.alkemymovieschallenge.ui.model.MoviesUIModel
+import com.example.alkemymovieschallenge.ui.model.UIModel
 import com.example.alkemymovieschallenge.ui.movies.adapters.OnClickMoviesListener
 
 class UpComingMoviesAdapter(
-    private var upComingMoviesList: List<MoviesUIModel>,
+    private var upComingMoviesList: List<UIModel>,
     private var onClickMoviesListener: OnClickMoviesListener
 ) : RecyclerView.Adapter<UpComingMoviesViewHolder>() {
 
@@ -26,7 +26,7 @@ class UpComingMoviesAdapter(
     override fun getItemCount(): Int = upComingMoviesList.size
 
 
-    fun setUpComingMoviesList(newMovieList: List<MoviesUIModel>) {
+    fun setUpComingMoviesList(newMovieList: List<UIModel>) {
         upComingMoviesList = newMovieList
         notifyDataSetChanged()
     }

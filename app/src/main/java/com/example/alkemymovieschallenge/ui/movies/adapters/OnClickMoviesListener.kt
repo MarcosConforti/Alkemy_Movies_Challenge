@@ -1,8 +1,8 @@
 package com.example.alkemymovieschallenge.ui.movies.adapters
 
-import com.example.alkemymovieschallenge.ui.model.MoviesUIModel
+import com.example.alkemymovieschallenge.ui.model.UIModel
 
 interface OnClickMoviesListener {
 
-    fun onMoviesClicked(movie: MoviesUIModel)
+    fun onMoviesClicked(data: UIModel)
 }

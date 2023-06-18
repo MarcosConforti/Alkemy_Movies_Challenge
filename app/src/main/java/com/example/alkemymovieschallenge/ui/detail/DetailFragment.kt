@@ -9,32 +9,29 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.alkemymovieschallenge.databinding.FragmentMoviesDetailBinding
+import com.example.alkemymovieschallenge.R
+import com.example.alkemymovieschallenge.databinding.FragmentDetailBinding
 import com.example.alkemymovieschallenge.ui.favorites.FavoriteViewModel
-import com.example.alkemymovieschallenge.ui.model.FavoritesUIModel
+import com.example.alkemymovieschallenge.ui.model.UIModel
 import com.example.alkemymovieschallenge.utils.Constants
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_movies_detail.tv_releaseDate
-import kotlinx.android.synthetic.main.fragment_movies_detail.tv_title
-import kotlinx.android.synthetic.main.fragment_movies_detail.tv_voteAverage
-import kotlinx.android.synthetic.main.fragment_series_detail.tv_overview
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MovieDetailFragment : Fragment() {
+class DetailFragment : Fragment() {
 
-    private var _binding: FragmentMoviesDetailBinding? = null
+    private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var movie: FavoritesUIModel
+    private lateinit var data: UIModel
 
     private val favoriteViewModel: FavoriteViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requireArguments().let {
-            movie = it.getParcelable("movie")!!
+            data = it.getParcelable("data")!!
         }
     }
 
@@ -42,7 +39,7 @@ class MovieDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMoviesDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentDetailBinding.inflate(inflater, container, false)
 
         return binding.root
     }
@@ -52,16 +49,14 @@ class MovieDetailFragment : Fragment() {
 
         getData()
         binding.btnAddToFavorites.setOnClickListener { isChecked() }
-        binding.btnWatchTrailer.setOnClickListener { removeFromFavorites(movie.title) }
     }
 
     private fun getData() {
-        movie.let {
-            tv_title.text = it.title
-            tv_overview.text = it.overview
-            tv_releaseDate.text = it.releaseDate
-            tv_voteAverage.text = it.voteAverage
-            Picasso.get().load(Constants.IMAGE_BASE + it.image).into(binding.ivImage)
+        data.let {
+            binding.tvTitle.text = it.title
+            binding.tvOverview.text = it.overview
+            binding.tvReleaseDate.text = it.releaseDate
+            binding.tvVoteAverage.text = it.voteAverage
             binding.ivBigImage.scaleType = ImageView.ScaleType.FIT_XY
             Picasso.get().load(Constants.IMAGE_BASE + it.image).into(binding.ivBigImage)
         }
@@ -69,9 +64,9 @@ class MovieDetailFragment : Fragment() {
 
     private fun isChecked() {
         viewLifecycleOwner.lifecycleScope.launch {
-            val isFavorite = favoriteViewModel.isChecked(movie.title)
+            val isFavorite = favoriteViewModel.isChecked(data.title)
             if (isFavorite) {
-                removeFromFavorites(movie.title)
+                removeFromFavorites(data.title)
             } else {
                 addToFavorites()
             }
@@ -79,17 +74,19 @@ class MovieDetailFragment : Fragment() {
     }
 
     private fun addToFavorites() {
-        favoriteViewModel.addToFavorites(movie)
+        favoriteViewModel.addToFavorites(data)
+        binding.btnAddToFavorites.setImageResource(R.drawable.ic_favorite)
         Toast.makeText(
-            requireContext(), "${movie.title} se ha agregado a Favoritos",
+            requireContext(), "${data.title} se ha agregado a Favoritos",
             Toast.LENGTH_SHORT
         ).show()
     }
 
-    private fun removeFromFavorites(tittle: String) {
-        favoriteViewModel.removeFavorites(tittle)
+    private fun removeFromFavorites(title: String) {
+        favoriteViewModel.removeFavorites(title)
+        binding.btnAddToFavorites.setImageResource(R.drawable.ic_favorite_border)
         Toast.makeText(
-            requireContext(), "${movie.title} se ha eliminado",
+            requireContext(), "${data.title} se ha eliminado",
             Toast.LENGTH_SHORT
         ).show()
     }

@@ -1,10 +1,10 @@
 package com.example.alkemymovieschallenge.ui.model.uiList
 
-import com.example.alkemymovieschallenge.ui.model.MoviesUIModel
+import com.example.alkemymovieschallenge.ui.model.UIModel
 
 data class MovieUIList(
-     val popular:List<MoviesUIModel>,
-     val upComing:List<MoviesUIModel>,
-     val nowPlaying:List<MoviesUIModel>,
-     val topRated:List<MoviesUIModel>
+     val popular:List<UIModel>,
+     val upComing:List<UIModel>,
+     val nowPlaying:List<UIModel>,
+     val topRated:List<UIModel>
 )

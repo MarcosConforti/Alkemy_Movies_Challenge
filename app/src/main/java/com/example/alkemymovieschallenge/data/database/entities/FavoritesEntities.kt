@@ -4,9 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.alkemymovieschallenge.data.api.model.FavoritesModel
-import com.google.gson.annotations.SerializedName
-import java.io.Serializable
-
 
 @Entity(tableName = "favorites_table")
 data class FavoritesEntities(
