@@ -21,6 +21,7 @@ import com.example.alkemymovieschallenge.ui.series.adapters.airing.AiringTodayTv
 import com.example.alkemymovieschallenge.ui.series.adapters.onTheAir.OnTheAirTvAdapter
 import com.example.alkemymovieschallenge.ui.series.adapters.popular.PopularTvAdapter
 import com.example.alkemymovieschallenge.ui.series.adapters.topRated.TopRatedTvAdapter
+import com.example.alkemymovieschallenge.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -79,7 +80,8 @@ class SeriesFragment : Fragment(), OnClickSeriesListener {
                     }
                     is UIState.Error -> {
                         binding.lottieAnimationView.isVisible = false
-                        Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), Constants.TOAST_ERROR,
+                            Toast.LENGTH_SHORT).show()
                     }
                 }
             }

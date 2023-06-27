@@ -21,6 +21,7 @@ import com.example.alkemymovieschallenge.ui.movies.adapters.nowPlaying.NowPlayin
 import com.example.alkemymovieschallenge.ui.movies.adapters.popular.PopularMoviesAdapter
 import com.example.alkemymovieschallenge.ui.movies.adapters.topRated.TopRatedMoviesAdapter
 import com.example.alkemymovieschallenge.ui.movies.adapters.upComing.UpComingMoviesAdapter
+import com.example.alkemymovieschallenge.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -81,7 +82,8 @@ class MoviesFragment : Fragment(), OnClickMoviesListener {
 
                     is UIState.Error -> {
                         binding.lottieAnimationView.isVisible = false
-                        Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), Constants.TOAST_ERROR,
+                            Toast.LENGTH_SHORT).show()
                     }
                 }
             }

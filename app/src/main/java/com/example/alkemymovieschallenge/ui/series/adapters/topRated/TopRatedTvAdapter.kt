@@ -20,7 +20,7 @@ class TopRatedTvAdapter(
     override fun onBindViewHolder(holder: TopRatedTvViewHolder, position: Int) {
         val item = topRatedTvList[position]
         holder.render(item)
-        holder.itemView.setOnClickListener { onClickSeriesListener?.onSeriesClicked(item) }
+        holder.itemView.setOnClickListener { onClickSeriesListener.onSeriesClicked(item) }
     }
 
     override fun getItemCount(): Int = topRatedTvList.size
@@ -29,6 +29,4 @@ class TopRatedTvAdapter(
         topRatedTvList = newTvList
         notifyDataSetChanged()
     }
-
-
 }

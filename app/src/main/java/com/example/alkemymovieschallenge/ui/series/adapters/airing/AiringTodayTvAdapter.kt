@@ -20,7 +20,7 @@ class AiringTodayTvAdapter(
     override fun onBindViewHolder(holder: AiringTodayTvViewHolder, position: Int) {
         val item = airingTodayTvList[position]
         holder.render(item)
-        holder.itemView.setOnClickListener { onClickSeriesListener?.onSeriesClicked(item) }
+        holder.itemView.setOnClickListener { onClickSeriesListener.onSeriesClicked(item) }
     }
 
     override fun getItemCount(): Int = airingTodayTvList.size
