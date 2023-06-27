@@ -20,7 +20,7 @@ class OnTheAirTvAdapter(
     override fun onBindViewHolder(holder: OnTheAirTvViewHolder, position: Int) {
         val item = onTheAirTvList[position]
         holder.render(item)
-        holder.itemView.setOnClickListener { onClickSeriesListener?.onSeriesClicked(item) }
+        holder.itemView.setOnClickListener { onClickSeriesListener.onSeriesClicked(item) }
     }
 
     override fun getItemCount(): Int = onTheAirTvList.size

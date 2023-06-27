@@ -4,8 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.widget.SearchView
 import android.widget.Toast
-import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,11 +20,12 @@ import com.example.alkemymovieschallenge.ui.UIState
 import com.example.alkemymovieschallenge.ui.model.UIModel
 import com.example.alkemymovieschallenge.ui.movies.adapters.OnClickMoviesListener
 import com.example.alkemymovieschallenge.ui.search.adapters.movies.AllMoviesAdapter
+import com.example.alkemymovieschallenge.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SearchFragment : Fragment(), OnClickMoviesListener, SearchView.OnQueryTextListener {
+class SearchFragment : Fragment(), OnClickMoviesListener,SearchView.OnQueryTextListener {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
@@ -31,22 +33,45 @@ class SearchFragment : Fragment(), OnClickMoviesListener, SearchView.OnQueryText
     private val searchViewModel: SearchViewModel by viewModels()
     private val allMoviesAdapter: AllMoviesAdapter = AllMoviesAdapter(emptyList(), this)
 
+    private lateinit var circularButton: View
+    private lateinit var searchView: View
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
 
-        binding.searchView.setOnQueryTextListener(this)
+        binding.searchViewLayout.searchView.setOnQueryTextListener(this)
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        circularButton = binding.searchViewLayout.circularButton
+        searchView = binding.searchViewLayout.searchView
         configAnim()
+        configSearchView()
         configRecycler()
         configObservers()
+    }
+
+    private fun configSearchView() {
+        circularButton.setOnClickListener {
+            // Expandir o contraer el SearchView
+            if (searchView.visibility == View.VISIBLE) {
+                val shrinkAnimation =
+                    AnimationUtils.loadAnimation(this.requireContext(), R.anim.shrink_out_animation)
+                searchView.startAnimation(shrinkAnimation)
+                searchView.visibility = View.GONE
+            } else {
+                val expandAnimation =
+                    AnimationUtils.loadAnimation(this.requireContext(), R.anim.expand_in_animation)
+                searchView.startAnimation(expandAnimation)
+                searchView.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun configAnim() {
@@ -77,7 +102,8 @@ class SearchFragment : Fragment(), OnClickMoviesListener, SearchView.OnQueryText
                     }
                     is UIState.Error -> {
                         binding.lottieAnimationView.isVisible = false
-                        Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), Constants.TOAST_ERROR,
+                            Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -95,8 +121,7 @@ class SearchFragment : Fragment(), OnClickMoviesListener, SearchView.OnQueryText
 
     override fun onMoviesClicked(data: UIModel) {
         val bundle = Bundle().apply {
-            putParcelable(
-                "data",data)
+            putParcelable("data",data)
         }
         findNavController().navigate(R.id.detailFragment, bundle)
     }

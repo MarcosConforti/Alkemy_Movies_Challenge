@@ -20,7 +20,7 @@ class PopularTvAdapter(
     override fun onBindViewHolder(holder: PopularTvViewHolder, position: Int) {
         val item = popularTvList[position]
         holder.render(item)
-        holder.itemView.setOnClickListener { onClickSeriesListener?.onSeriesClicked(item) }
+        holder.itemView.setOnClickListener { onClickSeriesListener.onSeriesClicked(item) }
     }
 
     override fun getItemCount(): Int = popularTvList.size
@@ -29,6 +29,4 @@ class PopularTvAdapter(
         popularTvList = newTvList
         notifyDataSetChanged()
     }
-
-
 }

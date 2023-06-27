@@ -77,7 +77,7 @@ class DetailFragment : Fragment() {
         favoriteViewModel.addToFavorites(data)
         binding.btnAddToFavorites.setImageResource(R.drawable.ic_favorite)
         Toast.makeText(
-            requireContext(), "${data.title} se ha agregado a Favoritos",
+            requireContext(), data.title + " " + Constants.TOAST_ADD_FAVORITES,
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -86,7 +86,7 @@ class DetailFragment : Fragment() {
         favoriteViewModel.removeFavorites(title)
         binding.btnAddToFavorites.setImageResource(R.drawable.ic_favorite_border)
         Toast.makeText(
-            requireContext(), "${data.title} se ha eliminado",
+            requireContext(), data.title + " " + Constants.TOAST_REMOVE_FAVORITES,
             Toast.LENGTH_SHORT
         ).show()
     }
