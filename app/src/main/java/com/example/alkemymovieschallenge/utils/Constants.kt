@@ -8,6 +8,8 @@ object Constants {
 
     val TOAST_ERROR = "Error en al actualizar Lista"
 
+    val TOAST_ALTERNATIVE_TITLE_ERROR = "Error al mostrar titulos alternativos"
+
     val TOAST_ADD_FAVORITES = " se ha agregado a Favoritos"
 
     val TOAST_REMOVE_FAVORITES = " se ha eliminado de Favoritos"

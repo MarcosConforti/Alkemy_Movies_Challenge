@@ -3,6 +3,7 @@ package com.example.alkemymovieschallenge.ui.movies
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.alkemymovieschallenge.domain.NetworkState
+import com.example.alkemymovieschallenge.domain.useCase.movies.GetAlternativeTitlesUseCase
 import com.example.alkemymovieschallenge.domain.useCase.movies.GetNowPlayingMoviesUseCase
 import com.example.alkemymovieschallenge.domain.useCase.movies.GetPopularMoviesUseCase
 import com.example.alkemymovieschallenge.domain.useCase.movies.GetTopRatedMoviesUseCase
@@ -23,7 +24,8 @@ class MoviesViewModel @Inject constructor(
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
     private val getUpComingMoviesUseCase: GetUpComingMoviesUseCase,
-    private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase
+    private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase,
+    private val getAlternativeTitlesUseCase: GetAlternativeTitlesUseCase
 ) :
     ViewModel() {
 

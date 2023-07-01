@@ -11,5 +11,6 @@ data class MoviesModel(
     @SerializedName("release_date") val releaseDate: String,
     @SerializedName("vote_average") val voteAverage: String,
     @SerializedName("overview") val overview: String,
-    @SerializedName("poster_path") val image: String
+    @SerializedName("poster_path") val image: String,
+  //  @SerializedName("type") val type: String
 ):Parcelable

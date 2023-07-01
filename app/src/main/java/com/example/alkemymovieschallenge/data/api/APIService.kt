@@ -3,6 +3,7 @@ package com.example.alkemymovieschallenge.data.api
 import com.example.alkemymovieschallenge.data.api.model.MoviesResponse
 import com.example.alkemymovieschallenge.data.api.model.SeriesResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface APIService {
       //Movies
@@ -18,6 +19,12 @@ interface APIService {
     @GET("3/movie/now_playing?api_key=b1bc4f98ee6343c991e3ee0d83868679")
     suspend fun getNowPlayingMovies(): MoviesResponse
 
+    @GET("3/search/movie?api_key=b1bc4f98ee6343c991e3ee0d83868679")
+    suspend fun getAllMovies(): MoviesResponse
+
+    @GET("/3/movie/{movie_id}/similar?api_key=b1bc4f98ee6343c991e3ee0d83868679")
+    suspend fun getAlternativeTitles(@Path("movie_id") movieId: String): MoviesResponse
+
        //Series
     @GET("3/tv/popular?api_key=b1bc4f98ee6343c991e3ee0d83868679")
     suspend fun getPopularTv(): SeriesResponse
@@ -31,8 +38,7 @@ interface APIService {
     @GET("3/tv/on_the_air?api_key=b1bc4f98ee6343c991e3ee0d83868679")
     suspend fun getOnTheAirTv(): SeriesResponse
 
-    @GET("3/search/movie?api_key=b1bc4f98ee6343c991e3ee0d83868679")
-    suspend fun getAllMovies(): MoviesResponse
+
 
 
 }

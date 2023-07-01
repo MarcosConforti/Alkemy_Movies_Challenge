@@ -101,6 +101,21 @@
                 <TextView
                     android:id="@+id/tv_overview"
                     style="@style/overviewDetailStyle" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/detailStyle"
+                    android:textSize="20sp"
+                    android:textStyle="normal"
+                    android:layout_marginStart="10dp"
+                    android:text="Similar:"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_alternativeTitle"
+                    style="@style/recyclerViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
             </LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

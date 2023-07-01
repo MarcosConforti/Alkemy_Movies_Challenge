@@ -9,8 +9,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.FragmentDetailBinding
+import com.example.alkemymovieschallenge.ui.UIState
 import com.example.alkemymovieschallenge.ui.favorites.FavoriteViewModel
 import com.example.alkemymovieschallenge.ui.model.UIModel
 import com.example.alkemymovieschallenge.utils.Constants
@@ -24,14 +26,17 @@ class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var data: UIModel
+    private lateinit var item: UIModel
 
     private val favoriteViewModel: FavoriteViewModel by viewModels()
+    private val detailViewModel: DetailViewModel by viewModels()
+
+    private var alternativeAdapter = AlternativeTitleAdapter(emptyList())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requireArguments().let {
-            data = it.getParcelable("data")!!
+            item = it.getParcelable("item")!!
         }
     }
 
@@ -49,10 +54,11 @@ class DetailFragment : Fragment() {
 
         getData()
         binding.btnAddToFavorites.setOnClickListener { isChecked() }
+        getAlternativeTitles(item.id.toString())
     }
 
     private fun getData() {
-        data.let {
+        item.let {
             binding.tvTitle.text = it.title
             binding.tvOverview.text = it.overview
             binding.tvReleaseDate.text = it.releaseDate
@@ -64,9 +70,9 @@ class DetailFragment : Fragment() {
 
     private fun isChecked() {
         viewLifecycleOwner.lifecycleScope.launch {
-            val isFavorite = favoriteViewModel.isChecked(data.title)
+            val isFavorite = favoriteViewModel.isChecked(item.title)
             if (isFavorite) {
-                removeFromFavorites(data.title)
+                removeFromFavorites(item.title)
             } else {
                 addToFavorites()
             }
@@ -74,10 +80,10 @@ class DetailFragment : Fragment() {
     }
 
     private fun addToFavorites() {
-        favoriteViewModel.addToFavorites(data)
+        favoriteViewModel.addToFavorites(item)
         binding.btnAddToFavorites.setImageResource(R.drawable.ic_favorite)
         Toast.makeText(
-            requireContext(), data.title + " " + Constants.TOAST_ADD_FAVORITES,
+            requireContext(), item.title + " " + Constants.TOAST_ADD_FAVORITES,
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -86,8 +92,38 @@ class DetailFragment : Fragment() {
         favoriteViewModel.removeFavorites(title)
         binding.btnAddToFavorites.setImageResource(R.drawable.ic_favorite_border)
         Toast.makeText(
-            requireContext(), data.title + " " + Constants.TOAST_REMOVE_FAVORITES,
+            requireContext(), item.title + " " + Constants.TOAST_REMOVE_FAVORITES,
             Toast.LENGTH_SHORT
         ).show()
+    }
+
+    private fun getAlternativeTitles(id: String) {
+        configAlternativeRecycler()
+        viewLifecycleOwner.lifecycleScope.launch {
+            detailViewModel.getAlternativeTitles(id)
+            detailViewModel.alternativeState.collect { alternativeTitle ->
+                when (alternativeTitle) {
+                    UIState.Loading -> {}
+                    is UIState.Success -> {
+                        alternativeAdapter.setAlternativeTitleList(alternativeTitle.data)
+                    }
+                    is UIState.Error -> {
+                        Toast.makeText(
+                            requireContext(), Constants.TOAST_ALTERNATIVE_TITLE_ERROR,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun configAlternativeRecycler() {
+        binding.rvAlternativeTitle.apply {
+            adapter = alternativeAdapter
+            layoutManager = LinearLayoutManager(
+                requireContext(), LinearLayoutManager.HORIZONTAL, false
+            )
+        }
     }
 }

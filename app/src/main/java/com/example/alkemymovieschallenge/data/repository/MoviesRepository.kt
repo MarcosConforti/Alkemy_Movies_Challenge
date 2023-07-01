@@ -131,6 +131,17 @@ class MoviesRepository @Inject constructor(
         }
     }
 
+    fun getAlternativeTitles(id: String):Flow<NetworkState<List<DomainModel>>>{
+        return flow {
+            try {
+                var moviesApi = api.getAlternativeTitles(id).results
+                emit(NetworkState.Success(moviesApi.map { it.toDomainModel() }))
+            }catch (e: Throwable){
+                emit(NetworkState.Error(e))
+            }
+        }
+    }
+
      fun getMoviesFromDataBase(): Flow<List<DomainModel>> {
         return moviesDao.getAllMovies(). map {
             response ->
