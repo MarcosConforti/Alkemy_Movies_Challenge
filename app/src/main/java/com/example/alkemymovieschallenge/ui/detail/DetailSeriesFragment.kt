@@ -9,10 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.FragmentDetailSeriesBinding
-import com.example.alkemymovieschallenge.ui.UIState
 import com.example.alkemymovieschallenge.ui.favorites.FavoriteViewModel
 import com.example.alkemymovieschallenge.ui.model.UIModel
 import com.example.alkemymovieschallenge.utils.Constants
@@ -29,9 +27,6 @@ class DetailSeriesFragment : Fragment() {
     private lateinit var series: UIModel
 
     private val favoriteViewModel: FavoriteViewModel by viewModels()
-    /*private val detailViewModel: DetailViewModel by viewModels()
-
-    private var alternativeAdapter = AlternativeSeriesTitleAdapter(emptyList())*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +49,6 @@ class DetailSeriesFragment : Fragment() {
 
         getData()
         binding.btnAddToFavorites.setOnClickListener { isChecked() }
-    //    getAlternativeTitles(id = series.id.toString())
     }
 
     private fun getData() {
@@ -96,34 +90,4 @@ class DetailSeriesFragment : Fragment() {
             Toast.LENGTH_SHORT
         ).show()
     }
-
-    /*private fun getAlternativeTitles(id: String) {
-        configAlternativeRecycler()
-        viewLifecycleOwner.lifecycleScope.launch {
-            detailViewModel.getAlternativeSeriesTitles(id)
-            detailViewModel.alternativeState.collect { alternativeTitle ->
-                when (alternativeTitle) {
-                    UIState.Loading -> {}
-                    is UIState.Success -> {
-                        alternativeAdapter.setAlternativeSeriesTitleList(alternativeTitle.data)
-                    }
-                    is UIState.Error -> {
-                        Toast.makeText(
-                            requireContext(), Constants.TOAST_ALTERNATIVE_TITLE_ERROR,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            }
-        }
-    }
-
-    private fun configAlternativeRecycler() {
-        binding.rvAlternativeSeriesTitle.apply {
-            adapter = alternativeAdapter
-            layoutManager = LinearLayoutManager(
-                requireContext(), LinearLayoutManager.HORIZONTAL, false
-            )
-        }
-    }*/
 }
