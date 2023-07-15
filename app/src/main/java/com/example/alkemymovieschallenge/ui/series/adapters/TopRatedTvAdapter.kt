@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.ui.BaseViewHolder
-import com.example.alkemymovieschallenge.ui.OnClickListener
 import com.example.alkemymovieschallenge.ui.model.UIModel
+import com.example.alkemymovieschallenge.ui.series.OnSeriesClickListener
 
 class TopRatedTvAdapter(
     private var topRatedTvList: List<UIModel>,
-    private var onClickListener: OnClickListener
+    private var onClickListener: OnSeriesClickListener
 ) : RecyclerView.Adapter<BaseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {

@@ -15,6 +15,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,33 +35,34 @@ class FavoriteViewModel @Inject constructor(
     fun getFavorites() {
         viewModelScope.launch {
             getFavoriteUseCase().collect { favorite ->
-                    when(favorite){
-                        NetworkState.Loading -> TODO()
-                        is NetworkState.Success ->{
-                            val getFavorite = favorite.data.map { it.toUIModel() }
-                            _favoriteUIState.value = UIState.Success(getFavorite)
-                        }
-                        is NetworkState.Error -> {
-                            _favoriteUIState.value = UIState.Error(Error())
-                        }
+                when (favorite) {
+                    NetworkState.Loading -> TODO()
+                    is NetworkState.Success -> {
+                        val getFavorite = favorite.data.map { it.toUIModel() }
+                        _favoriteUIState.value = UIState.Success(getFavorite)
                     }
-           }
+
+                    is NetworkState.Error -> {
+                        _favoriteUIState.value = UIState.Error(Error())
+                    }
+                }
+            }
         }
     }
 
 
     fun addToFavorites(favorite: UIModel) {
         viewModelScope.launch {
-            insertFavoriteUseCase.addToFavorites(
-                DomainModel(
-                    favorite.id,
-                    favorite.title,
-                    favorite.releaseDate,
-                    favorite.voteAverage,
-                    favorite.overview,
-                    favorite.image
-                )
+            val id = UUID.randomUUID().hashCode() // generamos un nuevo identificador único
+            val insert = DomainModel(
+                id,
+                favorite.title,
+                favorite.releaseDate,
+                favorite.voteAverage,
+                favorite.overview,
+                favorite.image
             )
+            insertFavoriteUseCase.addToFavorites(insert)
         }
     }
 

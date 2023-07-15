@@ -5,12 +5,13 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.alkemymovieschallenge.data.database.entities.SeriesEntities
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SeriesDao {
 
     @Query("SELECT * FROM series_table")
-    suspend fun getAllSeries():List<SeriesEntities>
+    fun getAllSeries(): Flow<List<SeriesEntities>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(series:List<SeriesEntities>)

@@ -16,7 +16,6 @@ import com.airbnb.lottie.LottieAnimationView
 import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.FragmentFavoritesBinding
 import com.example.alkemymovieschallenge.ui.UIState
-import com.example.alkemymovieschallenge.ui.favorites.adapter.FavoriteMoviesAdapter
 import com.example.alkemymovieschallenge.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieAnimationView
 import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.FragmentMoviesBinding
-import com.example.alkemymovieschallenge.ui.OnClickListener
 import com.example.alkemymovieschallenge.ui.UIState
 import com.example.alkemymovieschallenge.ui.model.UIModel
 import com.example.alkemymovieschallenge.ui.movies.adapters.NowPlayingMoviesAdapter
@@ -90,9 +89,10 @@ class MoviesFragment : Fragment(), OnClickListener {
         }
     }
 
-    override fun onItemClicked(item: UIModel) {
+    override fun onItemClicked(movie: UIModel) {
         val bundle = Bundle().apply {
-            putParcelable("item", item)
+            putParcelable("movie", movie)
+
         }
         findNavController().navigate(R.id.detailFragment, bundle)
     }

@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alkemymovieschallenge.R
-import com.example.alkemymovieschallenge.databinding.FragmentDetailBinding
+import com.example.alkemymovieschallenge.databinding.FragmentDetailSeriesBinding
 import com.example.alkemymovieschallenge.ui.UIState
 import com.example.alkemymovieschallenge.ui.favorites.FavoriteViewModel
 import com.example.alkemymovieschallenge.ui.model.UIModel
@@ -21,22 +21,22 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class DetailFragment : Fragment() {
+class DetailSeriesFragment : Fragment() {
 
-    private var _binding: FragmentDetailBinding? = null
+    private var _binding: FragmentDetailSeriesBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var movie: UIModel
+    private lateinit var series: UIModel
 
     private val favoriteViewModel: FavoriteViewModel by viewModels()
     /*private val detailViewModel: DetailViewModel by viewModels()
 
-    private var alternativeAdapter = AlternativeTitleAdapter(emptyList())*/
+    private var alternativeAdapter = AlternativeSeriesTitleAdapter(emptyList())*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requireArguments().let {
-            movie = it.getParcelable("movie")!!
+            series = it.getParcelable("series")!!
         }
     }
 
@@ -44,7 +44,7 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentDetailSeriesBinding.inflate(inflater, container, false)
 
         return binding.root
     }
@@ -54,11 +54,11 @@ class DetailFragment : Fragment() {
 
         getData()
         binding.btnAddToFavorites.setOnClickListener { isChecked() }
-//        getAlternativeTitles(movie.id.toString())
+    //    getAlternativeTitles(id = series.id.toString())
     }
 
     private fun getData() {
-        movie.let {
+        series.let {
             binding.tvTitle.text = it.title
             binding.tvOverview.text = it.overview
             binding.tvReleaseDate.text = it.releaseDate
@@ -70,9 +70,9 @@ class DetailFragment : Fragment() {
 
     private fun isChecked() {
         viewLifecycleOwner.lifecycleScope.launch {
-            val isFavorite = favoriteViewModel.isChecked(movie.title)
+            val isFavorite = favoriteViewModel.isChecked(series.title)
             if (isFavorite) {
-                removeFromFavorites(movie.title)
+                removeFromFavorites(series.title)
             } else {
                 addToFavorites()
             }
@@ -80,10 +80,10 @@ class DetailFragment : Fragment() {
     }
 
     private fun addToFavorites() {
-        favoriteViewModel.addToFavorites(movie)
+        favoriteViewModel.addToFavorites(series)
         binding.btnAddToFavorites.setImageResource(R.drawable.ic_favorite)
         Toast.makeText(
-            requireContext(), movie.title + " " + Constants.TOAST_ADD_FAVORITES,
+            requireContext(), series.title + " " + Constants.TOAST_ADD_FAVORITES,
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -92,20 +92,20 @@ class DetailFragment : Fragment() {
         favoriteViewModel.removeFavorites(title)
         binding.btnAddToFavorites.setImageResource(R.drawable.ic_favorite_border)
         Toast.makeText(
-            requireContext(), movie.title + " " + Constants.TOAST_REMOVE_FAVORITES,
+            requireContext(), series.title + " " + Constants.TOAST_REMOVE_FAVORITES,
             Toast.LENGTH_SHORT
         ).show()
     }
 
-  /*  private fun getAlternativeTitles(id: String) {
+    /*private fun getAlternativeTitles(id: String) {
         configAlternativeRecycler()
         viewLifecycleOwner.lifecycleScope.launch {
-            detailViewModel.getAlternativeMovieTitles(id)
+            detailViewModel.getAlternativeSeriesTitles(id)
             detailViewModel.alternativeState.collect { alternativeTitle ->
                 when (alternativeTitle) {
                     UIState.Loading -> {}
                     is UIState.Success -> {
-                        alternativeAdapter.setAlternativeTitleList(alternativeTitle.data)
+                        alternativeAdapter.setAlternativeSeriesTitleList(alternativeTitle.data)
                     }
                     is UIState.Error -> {
                         Toast.makeText(
@@ -119,7 +119,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun configAlternativeRecycler() {
-        binding.rvAlternativeTitle.apply {
+        binding.rvAlternativeSeriesTitle.apply {
             adapter = alternativeAdapter
             layoutManager = LinearLayoutManager(
                 requireContext(), LinearLayoutManager.HORIZONTAL, false

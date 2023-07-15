@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieAnimationView
 import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.FragmentSeriesBinding
-import com.example.alkemymovieschallenge.ui.OnClickListener
 import com.example.alkemymovieschallenge.ui.UIState
 import com.example.alkemymovieschallenge.ui.model.UIModel
 import com.example.alkemymovieschallenge.ui.series.adapters.AiringTodayTvAdapter
@@ -26,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SeriesFragment : Fragment(), OnClickListener {
+class SeriesFragment : Fragment(), OnSeriesClickListener {
 
     private var _binding: FragmentSeriesBinding? = null
     private val binding get() = _binding!!
@@ -123,10 +122,10 @@ class SeriesFragment : Fragment(), OnClickListener {
         }
     }
 
-    override fun onItemClicked(item: UIModel) {
+    override fun onItemClicked(series: UIModel) {
         val bundle = Bundle().apply {
-            putParcelable("item",item)
+            putParcelable("series",series)
         }
-        findNavController().navigate(R.id.detailFragment, bundle)
+        findNavController().navigate(R.id.detailSeriesFragment, bundle)
     }
 }

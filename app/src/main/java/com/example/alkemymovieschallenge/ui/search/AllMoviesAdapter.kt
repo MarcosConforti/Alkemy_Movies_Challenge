@@ -1,4 +1,4 @@
-package com.example.alkemymovieschallenge.ui.search.adapters.movies
+package com.example.alkemymovieschallenge.ui.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,7 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.ui.BaseViewHolder
-import com.example.alkemymovieschallenge.ui.OnClickListener
+import com.example.alkemymovieschallenge.ui.movies.OnClickListener
 import com.example.alkemymovieschallenge.ui.model.UIModel
 
 class AllMoviesAdapter(

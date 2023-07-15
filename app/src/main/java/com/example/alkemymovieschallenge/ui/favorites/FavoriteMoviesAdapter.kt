@@ -1,4 +1,4 @@
-package com.example.alkemymovieschallenge.ui.favorites.adapter
+package com.example.alkemymovieschallenge.ui.favorites
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
