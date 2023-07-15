@@ -23,7 +23,7 @@ class SeriesViewModel @Inject constructor(
     private val getPopularTvUseCase: GetPopularTvUseCase,
     private val getOnTheAirTvUseCase: GetOnTheAirTvUseCase,
     private val getTopRatedTvUseCase: GetTopRatedTvUseCase,
-    private val getAiringTodayTvUseCase: GetAiringTodayTvUseCase
+    private val getAiringTodayTvUseCase: GetAiringTodayTvUseCase,
 ):
  ViewModel() {
 

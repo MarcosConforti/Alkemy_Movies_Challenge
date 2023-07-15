@@ -1,4 +1,4 @@
-package com.example.alkemymovieschallenge.ui.favorites.adapter.movies
+package com.example.alkemymovieschallenge.ui.favorites
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,16 +6,17 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alkemymovieschallenge.R
+import com.example.alkemymovieschallenge.ui.BaseViewHolder
 import com.example.alkemymovieschallenge.ui.model.UIModel
 
 class FavoriteMoviesAdapter(
     private var favoriteList: List<UIModel>,
-) : RecyclerView.Adapter<FavoritesMoviesViewHolder>(), Filterable {
+) : RecyclerView.Adapter<BaseViewHolder>(), Filterable {
 
     var filteredFavoriteMoviesList: List<UIModel> = favoriteList
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesMoviesViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return FavoritesMoviesViewHolder(
+        return BaseViewHolder(
             layoutInflater.inflate(
                 R.layout.item_grid_list,
                 parent, false
@@ -23,7 +24,7 @@ class FavoriteMoviesAdapter(
         )
     }
 
-    override fun onBindViewHolder(holder: FavoritesMoviesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         val item = filteredFavoriteMoviesList[position]
         holder.render(item)
     }

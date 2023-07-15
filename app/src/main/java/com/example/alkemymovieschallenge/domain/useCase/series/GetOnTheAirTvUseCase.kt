@@ -8,6 +8,6 @@ import javax.inject.Inject
 
 class GetOnTheAirTvUseCase @Inject constructor(private val seriesRepository: SeriesRepository) {
 
-    suspend operator fun invoke(): Flow<NetworkState<List<DomainModel>>> =
+    operator fun invoke(): Flow<NetworkState<List<DomainModel>>> =
         seriesRepository.getOnTheAirTvFromApi()
 }

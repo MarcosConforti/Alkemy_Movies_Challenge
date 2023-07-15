@@ -16,17 +16,16 @@ import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.FragmentSeriesBinding
 import com.example.alkemymovieschallenge.ui.UIState
 import com.example.alkemymovieschallenge.ui.model.UIModel
-import com.example.alkemymovieschallenge.ui.series.adapters.OnClickSeriesListener
-import com.example.alkemymovieschallenge.ui.series.adapters.airing.AiringTodayTvAdapter
-import com.example.alkemymovieschallenge.ui.series.adapters.onTheAir.OnTheAirTvAdapter
-import com.example.alkemymovieschallenge.ui.series.adapters.popular.PopularTvAdapter
-import com.example.alkemymovieschallenge.ui.series.adapters.topRated.TopRatedTvAdapter
+import com.example.alkemymovieschallenge.ui.series.adapters.AiringTodayTvAdapter
+import com.example.alkemymovieschallenge.ui.series.adapters.OnTheAirTvAdapter
+import com.example.alkemymovieschallenge.ui.series.adapters.PopularTvAdapter
+import com.example.alkemymovieschallenge.ui.series.adapters.TopRatedTvAdapter
 import com.example.alkemymovieschallenge.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SeriesFragment : Fragment(), OnClickSeriesListener {
+class SeriesFragment : Fragment(), OnSeriesClickListener {
 
     private var _binding: FragmentSeriesBinding? = null
     private val binding get() = _binding!!
@@ -114,7 +113,7 @@ class SeriesFragment : Fragment(), OnClickSeriesListener {
             )
         }
         binding.rvOnTheAirTv.apply {
-            adapter = airingTodayTvAdapter
+            adapter = onTheAirTvAdapter
             layoutManager = LinearLayoutManager(
                 requireContext(),
                 LinearLayoutManager.HORIZONTAL,
@@ -123,10 +122,10 @@ class SeriesFragment : Fragment(), OnClickSeriesListener {
         }
     }
 
-    override fun onSeriesClicked(data: UIModel) {
+    override fun onItemClicked(series: UIModel) {
         val bundle = Bundle().apply {
-            putParcelable("data",data)
+            putParcelable("series",series)
         }
-        findNavController().navigate(R.id.detailFragment, bundle)
+        findNavController().navigate(R.id.detailSeriesFragment, bundle)
     }
 }

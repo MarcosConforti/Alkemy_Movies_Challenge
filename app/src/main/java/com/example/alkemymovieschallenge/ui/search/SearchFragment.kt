@@ -16,16 +16,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.airbnb.lottie.LottieAnimationView
 import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.FragmentSearchBinding
+import com.example.alkemymovieschallenge.ui.movies.OnClickListener
 import com.example.alkemymovieschallenge.ui.UIState
 import com.example.alkemymovieschallenge.ui.model.UIModel
-import com.example.alkemymovieschallenge.ui.movies.adapters.OnClickMoviesListener
-import com.example.alkemymovieschallenge.ui.search.adapters.movies.AllMoviesAdapter
 import com.example.alkemymovieschallenge.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SearchFragment : Fragment(), OnClickMoviesListener,SearchView.OnQueryTextListener {
+class SearchFragment : Fragment(), OnClickListener,SearchView.OnQueryTextListener {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
@@ -119,9 +118,9 @@ class SearchFragment : Fragment(), OnClickMoviesListener,SearchView.OnQueryTextL
         return false
     }
 
-    override fun onMoviesClicked(data: UIModel) {
+    override fun onItemClicked(movie: UIModel) {
         val bundle = Bundle().apply {
-            putParcelable("data",data)
+            putParcelable("movie",movie)
         }
         findNavController().navigate(R.id.detailFragment, bundle)
     }

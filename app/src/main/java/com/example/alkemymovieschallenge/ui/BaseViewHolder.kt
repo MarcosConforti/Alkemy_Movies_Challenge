@@ -1,4 +1,4 @@
-package com.example.alkemymovieschallenge.ui.series.adapters.popular
+package com.example.alkemymovieschallenge.ui
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -7,7 +7,7 @@ import com.example.alkemymovieschallenge.ui.model.UIModel
 import com.example.alkemymovieschallenge.utils.Constants
 import com.squareup.picasso.Picasso
 
-class PopularTvViewHolder(view: View):RecyclerView.ViewHolder(view) {
+class BaseViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
     private val binding = ItemGridListBinding.bind(view)
 

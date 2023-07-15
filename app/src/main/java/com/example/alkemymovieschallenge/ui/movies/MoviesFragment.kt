@@ -16,17 +16,16 @@ import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.FragmentMoviesBinding
 import com.example.alkemymovieschallenge.ui.UIState
 import com.example.alkemymovieschallenge.ui.model.UIModel
-import com.example.alkemymovieschallenge.ui.movies.adapters.OnClickMoviesListener
-import com.example.alkemymovieschallenge.ui.movies.adapters.nowPlaying.NowPlayingMoviesAdapter
-import com.example.alkemymovieschallenge.ui.movies.adapters.popular.PopularMoviesAdapter
-import com.example.alkemymovieschallenge.ui.movies.adapters.topRated.TopRatedMoviesAdapter
-import com.example.alkemymovieschallenge.ui.movies.adapters.upComing.UpComingMoviesAdapter
+import com.example.alkemymovieschallenge.ui.movies.adapters.NowPlayingMoviesAdapter
+import com.example.alkemymovieschallenge.ui.movies.adapters.PopularMoviesAdapter
+import com.example.alkemymovieschallenge.ui.movies.adapters.TopRatedMoviesAdapter
+import com.example.alkemymovieschallenge.ui.movies.adapters.UpComingMoviesAdapter
 import com.example.alkemymovieschallenge.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MoviesFragment : Fragment(), OnClickMoviesListener {
+class MoviesFragment : Fragment(), OnClickListener {
 
     private var _binding: FragmentMoviesBinding? = null
     private val binding get() = _binding!!
@@ -90,9 +89,10 @@ class MoviesFragment : Fragment(), OnClickMoviesListener {
         }
     }
 
-    override fun onMoviesClicked(data: UIModel) {
+    override fun onItemClicked(movie: UIModel) {
         val bundle = Bundle().apply {
-            putParcelable("data", data)
+            putParcelable("movie", movie)
+
         }
         findNavController().navigate(R.id.detailFragment, bundle)
     }

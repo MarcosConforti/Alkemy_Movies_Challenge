@@ -130,7 +130,6 @@ class MoviesRepository @Inject constructor(
             }
         }
     }
-
      fun getMoviesFromDataBase(): Flow<List<DomainModel>> {
         return moviesDao.getAllMovies(). map {
             response ->
@@ -138,11 +137,9 @@ class MoviesRepository @Inject constructor(
         }
     }
 
-    suspend fun insertMovies(movies: List<MoviesEntities>) {
+    suspend fun insertMovies(movies: List<MoviesEntities>) =
         moviesDao.insertAll(movies)
-    }
 
-    suspend fun cleanList() {
+    suspend fun cleanList() =
         moviesDao.deleteAllMovies()
-    }
 }
