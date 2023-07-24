@@ -4,34 +4,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="150dp"
-    android:layout_height="310dp"
-    app:cardBackgroundColor="#081A6D"
+    android:layout_height="220dp"
+    app:cardBackgroundColor="@color/black"
     app:cardCornerRadius="10dp"
     app:cardUseCompatPadding="true">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/iv_image"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="match_parent"
             android:visibility="visible" />
-        <TextView
-            android:id="@+id/tv_title"
-            style="@style/detailStyle"
-            android:hint="@string/title"
-            android:textStyle="bold"
-            android:paddingStart="4dp"
-            android:textSize="18sp"/>
-        <TextView
-            android:id="@+id/tv_voteAverage"
-            style="@style/voteAverageStyle"
-            android:paddingStart="2dp"
-            android:textSize="16sp"
-            android:textStyle="normal" />
-    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

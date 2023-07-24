@@ -4,15 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.FavoritesFragment">
+    tools:context=".ui.favorites.FavoritesFragment">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
-        style="@style/searchViewStyle"
-        app:layout_constraintEnd_toEndOf="parent"
+    <include
+        layout="@layout/layout_search_view"
+        android:id="@+id/searchViewLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimationView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:visibility="gone"
+        android:background="@android:color/black"
+        app:lottie_fileName="progressMovie.json"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -20,32 +37,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView">
+        app:layout_constraintTop_toBottomOf="@id/searchViewLayout">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_favoriteMovies"
-                style="@style/textStyle"
-                android:hint="@string/favoriteMovies"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_favoriteMovies"
                 style="@style/recyclerViewStyle"/>
 
-            <TextView
-                android:id="@+id/tv_favoriteSeries"
-                style="@style/textStyle"
-                android:hint="@string/favoriteSeries"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_favoriteSeries"
-                style="@style/recyclerViewStyle" />
         </LinearLayout>
     </ScrollView>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

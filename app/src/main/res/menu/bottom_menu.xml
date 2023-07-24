@@ -12,5 +12,5 @@
         android:icon="@drawable/ic_search"/>
     <item android:title="@string/favorites"
         android:id="@+id/favoritesFragment"
-        android:icon="@drawable/ic_favorites_outline_foreground"/>
+        android:icon="@drawable/ic_favorite_border"/>
 </menu>

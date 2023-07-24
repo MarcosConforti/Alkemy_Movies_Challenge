@@ -1,19 +1,22 @@
 package com.example.alkemymovieschallenge.domain.useCase.tv
 
-import com.example.alkemymovieschallenge.data.TvRepository
+import com.example.alkemymovieschallenge.data.repository.SeriesRepository
 import com.example.alkemymovieschallenge.domain.NetworkState
-import com.example.alkemymovieschallenge.domain.model.DomainTvModel
+import com.example.alkemymovieschallenge.domain.model.DomainModel
+import com.example.alkemymovieschallenge.domain.useCase.series.GetPopularTvUseCase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
 class GetPopularTvUseCaseTest {
     @RelaxedMockK
-    private lateinit var repository: TvRepository
+    private lateinit var repository: SeriesRepository
 
     lateinit var getPopularTvUseCase: GetPopularTvUseCase
 
@@ -27,7 +30,8 @@ class GetPopularTvUseCaseTest {
     fun `when the api doesnt return anything then get values from database`() = runBlocking {
 
         //Given
-        coEvery { repository.getPopularTvFromApi() } returns NetworkState.Success(emptyList())
+        val emptyListFlow: Flow<NetworkState<List<DomainModel>>> = flowOf(NetworkState.Success(emptyList()))
+        coEvery { repository.getPopularTvFromApi() } returns emptyListFlow
         //Then
         getPopularTvUseCase()
         //When

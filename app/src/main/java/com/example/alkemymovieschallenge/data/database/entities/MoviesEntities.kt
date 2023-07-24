@@ -3,8 +3,7 @@ package com.example.alkemymovieschallenge.data.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.alkemymovieschallenge.data.model.MoviesModel
-
+import com.example.alkemymovieschallenge.data.api.model.MoviesModel
 
 @Entity(tableName = "movies_table")
 data class MoviesEntities(

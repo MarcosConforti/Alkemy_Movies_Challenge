@@ -1,20 +1,23 @@
 package com.example.alkemymovieschallenge.domain.useCase.tv
 
-import com.example.alkemymovieschallenge.data.TvRepository
+import com.example.alkemymovieschallenge.data.repository.SeriesRepository
 import com.example.alkemymovieschallenge.domain.NetworkState
-import com.example.alkemymovieschallenge.domain.model.DomainTvModel
+import com.example.alkemymovieschallenge.domain.model.DomainModel
+import com.example.alkemymovieschallenge.domain.useCase.series.GetAiringTodayTvUseCase
 import io.mockk.MockKAnnotations
-import io.mockk.MockKStubScope
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
 class GetAiringTodayTvUseCaseTest{
     @RelaxedMockK
-    private lateinit var repository: TvRepository
+    private lateinit var repository: SeriesRepository
 
     lateinit var getAiringTodayTvUseCase: GetAiringTodayTvUseCase
 
@@ -28,7 +31,8 @@ class GetAiringTodayTvUseCaseTest{
     fun `when the api doesnt return anything then get values from database`() = runBlocking {
 
         //Given
-        coEvery { repository.getAiringTodayTvFromApi() } returns NetworkState.Success(emptyList())
+        val emptyListFlow: Flow<NetworkState<List<DomainModel>>> = flowOf(NetworkState.Success(emptyList()))
+        coEvery { repository.getAiringTodayTvFromApi() } returns emptyListFlow
         //Then
         getAiringTodayTvUseCase()
         //When
@@ -40,12 +44,14 @@ class GetAiringTodayTvUseCaseTest{
     fun `when the api return something then get values from api`() = runBlocking {
         //Given
         val myList = listOf(
-            DomainTvModel(
+            DomainModel(
                 0,"Mandalorian Season 2", "9.5", "5-15-2020",
                 "grogu", "image"
             )
         )
-        coEvery { repository.getAiringTodayTvFromApi() } returns NetworkState.Success(myList)
+        val myListFlow = flow { emit(NetworkState.Success(myList)) }
+        coEvery { repository.getAiringTodayTvFromApi() } returns myListFlow
+
         //When
         val response = getAiringTodayTvUseCase()
         //Then

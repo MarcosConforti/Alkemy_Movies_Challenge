@@ -16,5 +16,6 @@
     <color name="ic_series_background">#3D40DC</color>
     <color name="recycler_background">#181B47</color>
     <color name="voteAverage_color">#D2DA2E</color>
+    <color name="detail_trailerBottom_color">#E91E63</color>
 
 </resources>

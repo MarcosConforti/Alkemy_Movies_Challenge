@@ -3,10 +3,7 @@ package com.example.alkemymovieschallenge.data.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.alkemymovieschallenge.data.model.FavoritesModel
-import com.google.gson.annotations.SerializedName
-import java.io.Serializable
-
+import com.example.alkemymovieschallenge.data.api.model.FavoritesModel
 
 @Entity(tableName = "favorites_table")
 data class FavoritesEntities(
