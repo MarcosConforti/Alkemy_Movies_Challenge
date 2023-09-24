@@ -1,9 +1,9 @@
 package com.example.alkemymovieschallenge.domain.useCase.tv
 
-import com.example.alkemymovieschallenge.data.repository.SeriesRepository
-import com.example.alkemymovieschallenge.domain.NetworkState
-import com.example.alkemymovieschallenge.domain.model.DomainModel
-import com.example.alkemymovieschallenge.domain.useCase.series.GetPopularTvUseCase
+import com.example.alkemymovieschallenge.series.data.repository.SeriesRepository
+import com.example.alkemymovieschallenge.core.domain.NetworkState
+import com.example.alkemymovieschallenge.core.domain.DomainModel
+import com.example.alkemymovieschallenge.series.domain.useCase.GetPopularTvUseCase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify

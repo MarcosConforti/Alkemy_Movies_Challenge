@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#181B47"
-    tools:context=".ui.activities.WelcomeActivity">
+    tools:context=".activities.WelcomeActivity">
 
     <ImageView
         android:id="@+id/iv_image"
