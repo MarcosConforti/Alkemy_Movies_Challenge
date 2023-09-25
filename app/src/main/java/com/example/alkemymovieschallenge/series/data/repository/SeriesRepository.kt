@@ -1,25 +1,55 @@
 package com.example.alkemymovieschallenge.series.data.repository
 
-import android.util.Log
-import com.example.alkemymovieschallenge.series.data.api.APISeriesService
-import com.example.alkemymovieschallenge.series.data.database.SeriesDao
-import com.example.alkemymovieschallenge.series.data.database.SeriesEntities
-import com.example.alkemymovieschallenge.series.data.database.toSeriesDataBase
-import com.example.alkemymovieschallenge.core.domain.NetworkState
 import com.example.alkemymovieschallenge.core.domain.DomainModel
+import com.example.alkemymovieschallenge.core.domain.NetworkState
 import com.example.alkemymovieschallenge.core.domain.toDomainModel
+import com.example.alkemymovieschallenge.series.data.api.APISeriesService
+import com.example.alkemymovieschallenge.series.data.api.model.SeriesModel
+import com.example.alkemymovieschallenge.series.data.database.SeriesDao
+import com.example.alkemymovieschallenge.series.data.database.toSeriesDataBase
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 //esta clase funciona para seleccionar de donde el programa tomara las series, si de la api o db
 class SeriesRepository @Inject constructor(
     private val api: APISeriesService,
     private val seriesDao: SeriesDao
-) {
-    fun getPopularTvFromApi(): Flow<NetworkState<List<DomainModel>>> =
+):BaseSeriesRepository<SeriesModel>(api,seriesDao) {
+
+    fun getPopularTvFromApi():Flow<NetworkState<List<DomainModel>>>{
+        return getFromApiAndDatabase(
+            apiCall = {api.getPopularTv()},
+            mapApiResponse = { it.results },
+            mapToEntity = { it.toSeriesDataBase() },
+            mapToDomain = { it.toDomainModel() }
+        )
+    }
+
+    fun getTopRatedTvFromApi():Flow<NetworkState<List<DomainModel>>>{
+        return getFromApiAndDatabase(
+            apiCall = {api.getTopRatedTv()},
+            mapApiResponse = { it.results },
+            mapToEntity = { it.toSeriesDataBase() },
+            mapToDomain = { it.toDomainModel() }
+        )
+    }
+    fun getAiringTodayTvFromApi():Flow<NetworkState<List<DomainModel>>>{
+        return getFromApiAndDatabase(
+            apiCall = {api.getAiringTodayTv()},
+            mapApiResponse = { it.results },
+            mapToEntity = { it.toSeriesDataBase() },
+            mapToDomain = { it.toDomainModel() }
+        )
+    }
+    fun getOnTheAirTvFromApi():Flow<NetworkState<List<DomainModel>>>{
+        return getFromApiAndDatabase(
+            apiCall = {api.getOnTheAirTv()},
+            mapApiResponse = { it.results },
+            mapToEntity = { it.toSeriesDataBase() },
+            mapToDomain = { it.toDomainModel() }
+        )
+    }
+    /*fun getPopularTvFromApi(): Flow<NetworkState<List<DomainModel>>> =
         flow {
             try {
                 var seriesApi = api.getPopularTv().results
@@ -57,6 +87,7 @@ class SeriesRepository @Inject constructor(
                     }
                 }
             } catch (e: Throwable) {
+                Log.e("SeriesRepository", "Error en getTopRatedTvFromApi: ${e.message}")
                 emit(NetworkState.Error(e))
             }
         }
@@ -78,6 +109,7 @@ class SeriesRepository @Inject constructor(
                 }
 
             } catch (e: Throwable) {
+                Log.e("SeriesRepository", "Error en getAiringTodayTvFromApi: ${e.message}")
                 emit(NetworkState.Error(e))
             }
         }
@@ -99,6 +131,7 @@ class SeriesRepository @Inject constructor(
                 }
 
             } catch (e: Throwable) {
+                Log.e("SeriesRepository", "Error en getOnTheAirTvFromApi: ${e.message}")
                 emit(NetworkState.Error(e))
             }
         }
@@ -116,5 +149,5 @@ class SeriesRepository @Inject constructor(
 
     suspend fun cleanList() =
         seriesDao.deleteAllSeries()
-
+*/
 }
