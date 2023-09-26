@@ -16,7 +16,19 @@ class DetailRepository @Inject constructor(private val apiDetailService: APIDeta
         return flow {
             try {
                 val response = apiDetailService.getMovieDetail(movieId)
-                kotlin.runCatching { apiDetailService.getMovieDetail(movieId) }
+                kotlin.runCatching { response }
+                    .onSuccess { emit(Success(response.toDomainModel())) }
+                    .onFailure { Error("La respuesta esta vacia") }
+            }catch (e:Throwable){
+                emit(Error(e))
+            }
+        }
+    }
+    suspend fun getSeriesDetail(seriesId:String): Flow<NetworkState<DomainModel>> {
+        return flow {
+            try {
+                val response = apiDetailService.getSeriesDetail(seriesId)
+                kotlin.runCatching { response }
                     .onSuccess { emit(Success(response.toDomainModel())) }
                     .onFailure { Error("La respuesta esta vacia") }
             }catch (e:Throwable){

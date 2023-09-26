@@ -22,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class DetailFragment : Fragment() {
+class DetailMoviesFragment : Fragment() {
 
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
@@ -32,7 +32,7 @@ class DetailFragment : Fragment() {
     private val favoriteViewModel: FavoriteViewModel by viewModels()
     private val detailViewModel: DetailViewModel by viewModels()
 
-    private val args: DetailFragmentArgs by navArgs()
+    private val args: DetailMoviesFragmentArgs by navArgs()
 
 
     override fun onCreateView(

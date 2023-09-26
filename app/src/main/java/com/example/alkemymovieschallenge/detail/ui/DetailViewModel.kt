@@ -43,9 +43,32 @@ class DetailViewModel @Inject constructor(
                             )
                         )
                     }
-                    is NetworkState.Error -> {
-                        UIState.Error(Error())
+                    is NetworkState.Error -> UIState.Error(Error())
+                }
+            }
+        }
+    }
+
+    fun getSeries(seriesId: String) {
+        viewModelScope.launch {
+            _detailState.value = UIState.Loading
+            repository.getMoviesDetail(seriesId).collect { state ->
+                when (state) {
+                    NetworkState.Loading -> {}
+                    is NetworkState.Success -> {
+                        val series = state.data.toUIModel()
+                        _detailState.value = UIState.Success(
+                            UIModel(
+                                series.id,
+                                series.title,
+                                series.voteAverage,
+                                series.releaseDate,
+                                series.overview,
+                                series.image
+                            )
+                        )
                     }
+                    is NetworkState.Error -> UIState.Error(Error())
                 }
             }
         }

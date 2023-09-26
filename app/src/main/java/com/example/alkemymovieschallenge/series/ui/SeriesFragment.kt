@@ -12,7 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieAnimationView
-import com.example.alkemymovieschallenge.R
 import com.example.alkemymovieschallenge.databinding.FragmentSeriesBinding
 import com.example.alkemymovieschallenge.core.ui.UIState
 import com.example.alkemymovieschallenge.core.ui.UIModel
@@ -20,6 +19,7 @@ import com.example.alkemymovieschallenge.series.ui.adapters.AiringTodayTvAdapter
 import com.example.alkemymovieschallenge.series.ui.adapters.OnTheAirTvAdapter
 import com.example.alkemymovieschallenge.series.ui.adapters.PopularTvAdapter
 import com.example.alkemymovieschallenge.series.ui.adapters.TopRatedTvAdapter
+import com.example.alkemymovieschallenge.series.ui.model.SeriesUIList
 import com.example.alkemymovieschallenge.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -49,11 +49,17 @@ class SeriesFragment : Fragment(), OnSeriesClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initUI()
+
+    }
+
+    private fun initUI() {
         configAnim()
         configRecycler()
         configObservers()
     }
-    private fun configAnim(){
+
+    private fun configAnim() {
         val animationView: LottieAnimationView = binding.lottieAnimationView
         animationView.setAnimation("progressMovie.json")
         animationView.playAnimation()
@@ -64,27 +70,36 @@ class SeriesFragment : Fragment(), OnSeriesClickListener {
         viewLifecycleOwner.lifecycleScope.launch {
             seriesViewModel.getSeriesUIState.collect { seriesState ->
                 when (seriesState) {
-                    UIState.Loading -> {
-                        binding.lottieAnimationView.isVisible = true
-                        binding.scrollView.isVisible = false
-                    }
-                    is UIState.Success -> {
-                        binding.lottieAnimationView.isVisible = false
-                        binding.scrollView.isVisible = true
-                        popularTvAdapter.setPopularTvList(seriesState.data.popularTv)
-                        onTheAirTvAdapter.setOnTheAirTvList(seriesState.data.onTheAir)
-                        airingTodayTvAdapter.setAiringTodayTvList(seriesState.data.airingToday)
-                        topRatedTvAdapter.setTopRatedTvList(seriesState.data.topRated)
-                    }
-                    is UIState.Error -> {
-                        binding.lottieAnimationView.isVisible = false
-                        Toast.makeText(requireContext(), Constants.TOAST_ERROR,
-                            Toast.LENGTH_SHORT).show()
-                    }
+                    UIState.Loading -> loadingState()
+                    is UIState.Success -> successState(seriesState)
+                    is UIState.Error -> errorState()
                 }
             }
         }
     }
+
+    private fun loadingState() {
+        binding.lottieAnimationView.isVisible = true
+        binding.scrollView.isVisible = false
+    }
+
+    private fun errorState() {
+        binding.lottieAnimationView.isVisible = false
+        Toast.makeText(
+            requireContext(), Constants.TOAST_ERROR,
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun successState(seriesState: UIState.Success<SeriesUIList>) {
+        binding.lottieAnimationView.isVisible = false
+        binding.scrollView.isVisible = true
+        popularTvAdapter.setPopularTvList(seriesState.data.popularTv)
+        onTheAirTvAdapter.setOnTheAirTvList(seriesState.data.onTheAir)
+        airingTodayTvAdapter.setAiringTodayTvList(seriesState.data.airingToday)
+        topRatedTvAdapter.setTopRatedTvList(seriesState.data.topRated)
+    }
+
 
     private fun configRecycler() {
         binding.rvPopularTv.apply {
@@ -123,9 +138,10 @@ class SeriesFragment : Fragment(), OnSeriesClickListener {
     }
 
     override fun onItemClicked(series: UIModel) {
-      /*  val bundle = Bundle().apply {
-            putParcelable("series",series)
-        }
-        findNavController().navigate(R.id.detailSeriesFragment, bundle)*/
+        findNavController().navigate(
+            SeriesFragmentDirections.actionSeriesFragmentToSeriesDetailFragment(
+                series.id
+            )
+        )
     }
 }
