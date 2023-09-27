@@ -28,7 +28,7 @@ class GetAiringTodayTvUseCaseTest{
     }
 
     @Test
-    fun `when the api doesnt return anything then get values from database`() = runBlocking {
+    fun `when the api doesn't return anything then get values from database`() = runBlocking {
 
         //Given
         val emptyListFlow: Flow<NetworkState<List<DomainModel>>> = flowOf(NetworkState.Success(emptyList()))
@@ -36,7 +36,7 @@ class GetAiringTodayTvUseCaseTest{
         //Then
         getAiringTodayTvUseCase()
         //When
-        coVerify(exactly = 1) { repository.getAiringTodayTvFromApi() }
+        coVerify(exactly = 1) { repository.getFromDatabase() }
 
     }
 
@@ -45,7 +45,7 @@ class GetAiringTodayTvUseCaseTest{
         //Given
         val myList = listOf(
             DomainModel(
-                0,"Mandalorian Season 2", "9.5", "5-15-2020",
+                "1","Mandalorian Season 2", "9.5", "5-15-2020",
                 "grogu", "image"
             )
         )
@@ -55,9 +55,26 @@ class GetAiringTodayTvUseCaseTest{
         //When
         val response = getAiringTodayTvUseCase()
         //Then
-        coVerify(exactly = 1) { repository.cleanList() }
-        coVerify(exactly = 1) { repository.insertSeries(any()) }
-        coVerify(exactly = 0) { repository.getSeriesFromDataBase() }
-        assert(myList == response)
+        coVerify(exactly = 1) { repository.getAiringTodayTvFromApi()}
+        assert(response == myListFlow)
+    }
+
+    @Test
+    fun `when the api returns an error`() {
+        runBlocking {
+            // Given
+            val error: Flow<NetworkState<List<DomainModel>>> = flowOf( NetworkState.Error(Error()))
+            coEvery { repository.getAiringTodayTvFromApi() } returns error
+
+            // When
+            val response = getAiringTodayTvUseCase()
+
+            // Then
+            coVerify { repository.getAiringTodayTvFromApi() }
+            coVerify(exactly = 0) { repository.cleanList() }
+            coVerify(exactly = 0) { repository.insertItems(any()) }
+            coVerify(exactly = 0) { repository.getFromDatabase() }
+            assert(error == response)
+        }
     }
 }
