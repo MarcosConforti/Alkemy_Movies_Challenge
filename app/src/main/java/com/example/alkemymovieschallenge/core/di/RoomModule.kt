@@ -2,9 +2,9 @@ package com.example.alkemymovieschallenge.core.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.alkemymovieschallenge.data.database.FavoritesDataBase
-import com.example.alkemymovieschallenge.data.database.MoviesDataBase
-import com.example.alkemymovieschallenge.data.database.SeriesDataBase
+import com.example.alkemymovieschallenge.favorites.data.database.FavoritesDataBase
+import com.example.alkemymovieschallenge.movies.data.database.MoviesDataBase
+import com.example.alkemymovieschallenge.series.data.database.SeriesDataBase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

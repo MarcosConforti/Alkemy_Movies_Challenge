@@ -1,7 +1,9 @@
 package com.example.alkemymovieschallenge.core.di
 
-import com.example.alkemymovieschallenge.data.api.APIKeyInterceptor
-import com.example.alkemymovieschallenge.data.api.APIService
+import com.example.alkemymovieschallenge.core.interceptor.APIKeyInterceptor
+import com.example.alkemymovieschallenge.detail.data.api.APIDetailService
+import com.example.alkemymovieschallenge.movies.data.api.APIMovieService
+import com.example.alkemymovieschallenge.series.data.api.APISeriesService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,7 +44,19 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideAPIService(retrofit: Retrofit): APIService {
-        return retrofit.create(APIService::class.java)
+    fun provideAPISeriesService(retrofit: Retrofit): APISeriesService {
+        return retrofit.create(APISeriesService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAPIMoviesService(retrofit: Retrofit):APIMovieService{
+        return retrofit.create(APIMovieService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun providesAPIDetailService(retrofit: Retrofit):APIDetailService{
+        return retrofit.create(APIDetailService::class.java)
     }
 }
