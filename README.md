@@ -17,14 +17,11 @@ This is a simple Movie/Series catalog written in Kotlin using a modern Android A
 - Detail Fragment
 - Search Fragment
 - Favorite Fragment
+- Kotlin Coroutines
+- Navigation
 - Local Cache
 - Unitary Test
 
-
-# Currently in development
-
-- Add Favorites
-- Search Movies/Series
 
 
 * Marcos Conforti
