@@ -68,8 +68,6 @@ class DetailMoviesFragment : Fragment() {
                     is UIState.Error -> {
                         Log.e("Detail", "Error al cargar datos")
                     }
-
-
                 }
             }
         }
